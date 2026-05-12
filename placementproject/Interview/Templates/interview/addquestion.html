@@ -1,0 +1,277 @@
+{% extends 'Admin/JobPost.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Questions</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f8fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    select, textarea, input[type="hidden"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-top: 5px;
+      font-size: 14px;
+    }
+
+    textarea { height: 80px; }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 6px;
+      margin-top: 20px;
+      cursor: pointer;
+      width: 100%;
+      transition: 0.3s;
+    }
+
+    button:hover { background-color: #0056b3; }
+
+    .message {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 16px;
+      padding: 10px;
+      border-radius: 6px;
+      display: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    tr:nth-child(even) { background-color: #f9f9f9; }
+
+    .actions a {
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      color: white;
+      margin-right: 5px;
+      font-size: 14px;
+      transition: 0.2s;
+    }
+
+    .edit-btn { background-color: #28a745; }
+    .edit-btn:hover { background-color: #218838; }
+
+    .delete-btn { background-color: #dc3545; }
+    .delete-btn:hover { background-color: #c82333; }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 15% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 400px;
+      text-align: center;
+    }
+
+    .modal button {
+      width: auto;
+      margin: 10px;
+    }
+
+  </style>
+</head>
+<body><br><br><br>
+  <div class="container">
+    <h2>Manage Questions</h2>
+
+    <!-- Success/Error Message -->
+    <div class="message" id="msg"></div>
+
+    <form id="questionForm" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="question_id" id="question_id">
+
+      <label for="language">Language:</label>
+      <select name="language" id="language" required>
+        <option value="">-- Select Language --</option>
+        <option value="Python">Python</option>
+        <option value="Java">Java</option>
+        <option value="C++">C++</option>
+        <option value="HTML">HTML</option>
+        <option value="CSS">CSS</option>
+        <option value="JavaScript">JavaScript</option>
+      </select>
+
+      <label for="question">Question:</label>
+      <textarea name="question" id="question" placeholder="Enter your question" required></textarea>
+
+      <label for="answer">Answer:</label>
+      <textarea name="answer" id="answer" placeholder="Enter the answer" required></textarea>
+
+      <button type="submit" id="submitBtn">Add Question</button>
+    </form>
+
+    {% if questions %}
+    <h2>All Questions</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Language</th>
+          <th>Question</th>
+          <th>Answer</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for q in questions %}
+        <tr>
+          <td>{{ q.id }}</td>
+          <td>{{ q.language }}</td>
+          <td>{{ q.question }}</td>
+          <td>{{ q.answer }}</td>
+          <td class="actions">
+            <a href="#" class="edit-btn"
+               onclick="editQuestion('{{ q.id }}', '{{ q.language }}', `{{ q.question|escapejs }}`, `{{ q.answer|escapejs }}`)">
+               Edit
+            </a>
+            <a href="#" class="delete-btn" onclick="confirmDelete('{{ q.id }}')">Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p style="text-align:center; margin-top:20px;">No questions added yet.</p>
+    {% endif %}
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="deleteModal" class="modal">
+    <div class="modal-content">
+      <p>Are you sure you want to delete this question?</p>
+      <button id="confirmDeleteBtn" style="background-color:#dc3545;">Delete</button>
+      <button onclick="closeModal()" style="background-color:#6c757d;">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+    const msg = document.getElementById('msg');
+    const submitBtn = document.getElementById('submitBtn');
+    const questionForm = document.getElementById('questionForm');
+    let deleteId = null;
+
+    // Show success message
+    function showMessage(text, color='green') {
+      msg.textContent = text;
+      msg.style.color = color;
+      msg.style.display = 'block';
+      setTimeout(() => { msg.style.display = 'none'; }, 3000);
+    }
+
+    // Edit question
+    function editQuestion(id, language, question, answer) {
+      document.getElementById('question_id').value = id;
+      document.getElementById('language').value = language;
+      document.getElementById('question').value = question;
+      document.getElementById('answer').value = answer;
+      submitBtn.textContent = 'Update Question';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Handle form submit for demo success message
+    questionForm.addEventListener('submit', function(event){
+      const language = document.getElementById('language').value;
+      const question = document.getElementById('question').value.trim();
+      const answer = document.getElementById('answer').value.trim();
+
+      if(!language || !question || !answer){
+        event.preventDefault();
+        showMessage('Please fill all fields!', 'red');
+      } else {
+        showMessage(submitBtn.textContent + ' successfully!');
+      }
+    });
+
+    // Delete confirmation modal
+    const modal = document.getElementById('deleteModal');
+    const confirmBtn = document.getElementById('confirmDeleteBtn');
+
+    function confirmDelete(id){
+      deleteId = id;
+      modal.style.display = 'block';
+    }
+
+    function closeModal(){
+      modal.style.display = 'none';
+      deleteId = null;
+    }
+
+    confirmBtn.addEventListener('click', function(){
+      if(deleteId){
+        const id = parseInt(deleteId);
+         window.location.href = "{% url 'Interview:delete_question' 0 %}".replace('0', id);
+        }
+    });
+
+    window.onclick = function(event){
+      if(event.target == modal) closeModal();
+    }
+  </script>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Preparation Tips</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+
+        .content-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #1f2937;
+            border-bottom: 3px solid #8b5cf6; /* Purple accent */
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tip-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f6ff;
+            border-left: 5px solid #8b5cf6;
+        }
+        
+        .tip-section h2 {
+            font-size: 24px;
+            color: #4c1d95;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .tip-section h2 i {
+            margin-right: 10px;
+        }
+
+        .tip-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .tip-section ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+            color: #4b5563;
+        }
+
+        .tip-section ul li::before {
+            content: "\f00c"; /* Font Awesome Check Mark */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: #10b981; /* Green check */
+            font-size: 14px;
+        }
+        
+        .tip-section p {
+            color: #4b5563;
+            margin-bottom: 15px;
+        }
+
+        strong {
+            color: #1f2937;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .back-link i {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-container">
+        <h1>Interview Preparation Tips</h1>
+        <p>Your guide to mastering both technical and behavioral rounds to secure your placement.</p>
+
+        <div class="tip-section">
+            <h2><i class="fas fa-code"></i> Technical Round Focus</h2>
+            <ul>
+                <li><strong>Practice Data Structures & Algorithms:</strong> Be ready to code on a whiteboard or a shared screen.</li>
+                <li><strong>Review Core Subjects:</strong> Brush up on OS, DBMS, Networking, and OOP concepts thoroughly.</li>
+                <li><strong>Explain Your Projects:</strong> Know the architecture, challenges, and design decisions of every project on your resume.</li>
+                <li><strong>Think Aloud:</strong> Always verbalize your thought process when solving a problem—interviewers value your approach as much as the solution.</li>
+            </ul>
+        </div>
+
+        <div class="tip-section">
+            <h2><i class="fas fa-handshake"></i> HR & Behavioral Round Focus</h2>
+            <ul>
+                <li><strong>Prepare STAR Method Stories:</strong> Use the Situation, Task, Action, Result (STAR) technique for answering behavioral questions like "Tell me about a time you failed."</li>
+                <li><strong>Research the Company:</strong> Know their recent projects, values, and the role's responsibilities to show genuine interest.</li>
+                <li><strong>Formulate Your Strengths & Weaknesses:</strong> Frame your weakness as a challenge you are actively overcoming.</li>
+                <li><strong>Prepare Questions to Ask:</strong> Always have 2-3 thoughtful questions ready for the interviewer about the team, culture, or future projects.</li>
+            </ul>
+        </div>
+        
+        <a href="{% url 'Users:Aptitude' %}" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Preparation Dashboard
+        </a>
+    </div>
+</body>
+</html>

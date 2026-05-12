@@ -1,0 +1,172 @@
+{% extends 'User/Interview.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>View Preparation</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f2f2f7;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    display: flex;
+    max-width: 1000px;
+    margin: 50px auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 200px;
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+  }
+  .sidebar h3 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .language-item {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    transition: 0.2s;
+  }
+  .language-item:hover, .language-item.active {
+    background-color: #0056b3;
+  }
+
+  /* Main content */
+  .content {
+    flex: 1;
+    padding: 30px;
+  }
+
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .question-box {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+  }
+  .question-text {
+    font-weight: bold;
+    font-size: 16px;
+    color: #007bff;
+  }
+  .answer-text {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    background: #f1f1f1;
+    border-radius: 6px;
+  }
+  .show-btn {
+    margin-top: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    background: #28a745;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .show-btn:hover {
+    background: #218838;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h3>Languages</h3>
+    {% if questions %}
+      {% regroup questions by language as language_list %}
+      {% for lang in language_list %}
+        <div class="language-item" onclick="filterLanguage('{{ lang.grouper }}')">{{ lang.grouper }}</div>
+      {% endfor %}
+      <div class="language-item active" onclick="filterLanguage('all')">All</div>
+    {% endif %}
+  </div>
+
+  <!-- Main content -->
+  <div class="content">
+    <h2>Technical Questions</h2>
+
+    {% if questions %}
+      {% regroup questions by language as language_list %}
+      {% for lang in language_list %}
+        {% for q in lang.list %}
+          <div class="question-box" data-language="{{ lang.grouper }}">
+            <div class="question-text">{{ q.question }}</div>
+            <button class="show-btn" onclick="toggleAnswer('answer-{{ q.id }}', this)">Show Answer</button>
+            <div class="answer-text" id="answer-{{ q.id }}">{{ q.answer }}</div>
+          </div>
+        {% endfor %}
+      {% endfor %}
+    {% else %}
+      <p>No questions available.</p>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  // Toggle answer visibility
+  function toggleAnswer(id, btn) {
+    const ans = document.getElementById(id);
+    if(ans.style.display === "none" || ans.style.display === "") {
+      ans.style.display = "block";
+      btn.textContent = "Hide Answer";
+    } else {
+      ans.style.display = "none";
+      btn.textContent = "Show Answer";
+    }
+  }
+
+  // Filter questions by language
+  function filterLanguage(lang) {
+    const items = document.querySelectorAll('.question-box');
+    items.forEach(item => {
+      if(lang === 'all' || item.dataset.language === lang) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+
+    // Highlight active language
+    const langItems = document.querySelectorAll('.language-item');
+    langItems.forEach(i => i.classList.remove('active'));
+    if(lang === 'all') {
+      document.querySelector('.language-item:last-child').classList.add('active');
+    } else {
+      langItems.forEach(i => {
+        if(i.textContent === lang) i.classList.add('active');
+      });
+    }
+  }
+
+  // Set default: show all
+  filterLanguage('all');
+</script>
+
+</body>
+</html>
+{% endblock %}

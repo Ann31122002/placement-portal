@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RESULT</title>
+    <style>
+        .card-container {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .question-card {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-card.no-answer {
+            background-color: #ffe6e6;
+            border-color: #ffb3b3;
+        }
+
+        .question-text {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .option {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #fff;
+            border: 1px solid #eee;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+        }
+
+        .option.true-option {
+            background-color: #e6ffe6;
+            border-color: #b3ffb3;
+            color: #006600;
+        }
+
+        .option.wrong-option {
+            background-color: #ffe6e6;
+            border-color: #ffb3b3;
+            color: #660000;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+
+        .error-message {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .question-card.error {
+            border-color: #f5c6cb;
+            background-color: #fff5f5;
+        }
+
+        .exam-title {
+            background-color: #ffffff;
+            border: 2px solid #4CAF50; /* Green border */
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two-column layout */
+            gap: 15px; /* Space between grid items */
+            font-size: 18px;
+            color: #333;
+        }
+
+        .exam-title div {
+            display: flex;
+            align-items: center;
+        }
+
+        .exam-title span {
+            font-weight: bold;
+            margin-right: 8px;
+            color: #4CAF50; /* Green labels */
+        }
+
+        .exam-title .exam-name {
+            color: #2c3e50; /* Dark blue for exam name */
+            font-weight: bold;
+        }
+
+        .exam-title .scored-mark {
+            color: #e67e22; /* Orange for scored mark */
+        }
+
+        .exam-title .total-marks {
+            color: #7f8c8d; /* Gray for total marks */
+        }
+
+        .exam-title .question-count {
+            color: #8e44ad; /* Purple for question count */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card-container">
+        {% if result %}
+        <div class="exam-title">
+            <div><span>Exam:</span> <span class="exam-name">{{ result.0.examinationbody.examination.examination_name }}</span></div>
+            <div><span>Scored mark:</span> <span class="scored-mark">{{ result.0.examinationbody.total_marks }}</span></div>
+            <div><span>Total marks:</span> <span class="total-marks">{{ question }}</span></div>
+            <div><span>Questions:</span> <span class="question-count">{{ question }}</span></div>
+        </div>
+        {% endif %}
+        {% for result in result %}
+        <div class="question-card {% if not result.myanswer %}no-answer{% endif %}">
+            <div class="question-text">
+                {{ forloop.counter }}. {{ result.question.question }}
+            </div>
+            <div class="options-container">
+                {% for option in result.question.tbl_options_set.all %}
+                    {% if option.id == result.myanswer.id and option.status %}
+                        <label class="option true-option">
+                            {{ option.answer }}
+                        </label>
+                    {% else %}
+                        {% if option.status %}
+                            <label class="option true-option">
+                                {{ option.answer }}
+                            </label>
+                        {% elif option.id == result.myanswer.id %}
+                            <label class="option wrong-option">
+                                {{ option.answer }}
+                            </label>
+                        {% else %}
+                            <label class="option">
+                                {{ option.answer }}
+                            </label>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% empty %}
+        <p>No questions available.</p>
+        {% endfor %}
+    </div>
+</body>
+
+</html>

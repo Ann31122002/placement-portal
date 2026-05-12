@@ -1,0 +1,121 @@
+{% extends 'Admin/JobPost.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examination Results</title>
+    <style>
+        /* Global Reset and Body Styling */
+        body {
+            font-family: 'Roboto', 'Arial', sans-serif;
+            background-color: #e9ecef; /* Very light gray background */
+            margin: 0;
+            padding: 40px 20px;
+            color: #343a40; /* Dark text color */
+        }
+
+        /* Container for Centering and Structure */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Heading Style */
+        h1 {
+            text-align: center;
+            color: #17a2b8; /* Info blue/teal */
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            border-bottom: 3px solid #17a2b8;
+            padding-bottom: 10px;
+        }
+
+        /* Table Styles */
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 1em;
+        }
+
+        /* Table Header */
+        .results-table tr:first-child td {
+            background-color: #343a40; /* Dark header background */
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 700;
+            border: 1px solid #343a40;
+        }
+
+        /* Table Cells */
+        .results-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #ced4da; /* Light borders */
+            vertical-align: middle;
+        }
+
+        /* Row Striping and Hover Effect */
+        .results-table tr:nth-child(even) {
+            background-color: #f8f9fa; /* Light stripe */
+        }
+
+        .results-table tr:hover:not(:first-child) {
+            background-color: #e2f2ff; /* Highlight row on hover, excluding header */
+            cursor: default;
+        }
+
+        /* Score Highlighting (Total vs. Scored) */
+        /* Total Column (4th) */
+        .results-table tr td:nth-child(4) {
+            font-weight: 600;
+            color: #007bff; /* Blue for total */
+        }
+
+        /* Scored Column (5th) */
+        .results-table tr td:nth-child(5) {
+            font-weight: 800;
+            color: #28a745; /* Green for scored */
+            background-color: #e6ffed;
+            border-left: 3px solid #28a745;
+        }
+        
+        /* Specific Column Widths */
+        .results-table td:nth-child(1) { width: 5%; }  /* Sno */
+        .results-table td:nth-child(2) { width: 30%; } /* Student */
+        .results-table td:nth-child(3) { width: 35%; } /* Examination */
+    </style>
+</head>
+<body><br><br><br>
+    <div class="container">
+        <h1>Detailed Examination Results</h1>
+        <table class="results-table" align="center">
+            <tr>
+                <td>Sno</td>
+                <td>Student Name</td>
+                <td>Examination Title</td>
+                <td>Total Marks</td>
+                <td>Score Achieved</td>
+            </tr>
+            {% for i in user %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.user_name }}</td>
+                <td>{{ i.tbl_examinationbody_set.first.examination.examination_name }}</td>
+                <td>{{ i.tbl_examinationbody_set.first.examination.examination_mark }}</td>
+                <td>{{ i.tbl_examinationbody_set.first.total_marks }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,228 @@
+{% extends 'Guest/index.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        /* General Reset and Body Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to the top, but centered */
+            min-height: 100vh;
+        }
+
+        /* Form Container Styling */
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        /* Table Styling */
+        #UserForm table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+        }
+
+        #UserForm table tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        #UserForm table tr:last-child {
+            border-bottom: none;
+        }
+
+        #UserForm table td {
+            padding: 12px 0;
+            vertical-align: top;
+        }
+
+        #UserForm table td:first-child {
+            font-weight: 600;
+            color: #333;
+            width: 40%; /* Allocate space for labels */
+        }
+
+        /* Input and Textarea Styling */
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="file"],
+        textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            transition: border-color 0.3s;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        
+        /* File Input Adjustment */
+        input[type="file"] {
+            padding: 5px 10px;
+            border: none;
+        }
+
+        /* Radio Button Styling */
+        input[type="radio"] {
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+
+        td label[for^="btn_gender"] {
+            margin-left: 15px;
+        }
+
+        /* Button Styling */
+        input[type="submit"],
+        input[type="reset"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        
+        input[type="reset"] {
+            background-color: #6c757d;
+        }
+
+        input[type="reset"]:hover {
+            background-color: #5a6268;
+        }
+
+        /* Title/Heading */
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        /* Center for colspan buttons */
+        td[colspan="2"] {
+            text-align: center;
+            padding-top: 20px;
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>User Registration Form 🧑‍💻</h2>
+        <form action="" method="POST" id="UserForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td>Name</td>
+                     <td><label for="txt_name"></label>
+                         <input type="text" name="txt_name" id="txt_name" placeholder="Enter full name" required/></td>
+                </tr>
+                <tr>
+                    <td>Contact</td>
+                    <td><label for="txt_con"></label>
+                    <input type="text" name="txt_con" id="txt_con" placeholder="e.g., 9876543210" pattern="\d{10}" title="Ten digits required" required/></td>
+                </tr>
+                <tr>
+                   <td>Email</td>
+                  <td><label for="txt_email"></label>
+                  <input type="email" name="txt_email" id="txt_email" placeholder="name@example.com" required/></td>
+                </tr>
+                <tr>
+                         <td>Gender</td>
+                     <td>
+                        <input type="radio" name="btn_gender" id="btn_gender_male" value="Male" required/>Male
+                        <input type="radio" name="btn_gender" id="btn_gender_female" value="Female" />Female
+                     </td>
+                </tr>
+                <tr>
+                   <td>Address</td>
+                    <td><label for="txt_address"></label>
+                   <textarea name="txt_address" id="txt_address" cols="45" rows="5" placeholder="Permanent Address" required></textarea></td>
+                </tr>
+                 <tr>
+                    <td>City</td>
+                     <td><label for="txt_city"></label>
+                         <input type="text" name="txt_city" id="txt_city" placeholder="City name" required/></td>
+                </tr>
+                 <tr>
+                    <td>State</td>
+                     <td><label for="txt_state"></label>
+                         <input type="text" name="txt_state" id="txt_state" placeholder="State name" required/></td>
+                </tr>
+                 <tr>
+                    <td>Mark in 10th(%)</td>
+                     <td><label for="txt_mark10"></label>
+                         <input type="text" name="txt_mark10" id="txt_mark10" placeholder="e.g., 85.00" required/></td>
+                </tr>
+                 <tr>
+                    <td>Mark in 12th(%)</td>
+                     <td><label for="txt_mark12"></label>
+                         <input type="text" name="txt_mark12" id="txt_mark12" placeholder="e.g., 78.50" required/></td>
+                </tr>
+                 <tr>
+                    <td>Mark in Degree/Btech/others(%)</td>
+                     <td><label for="txt_mark"></label>
+                         <input type="text" name="txt_mark" id="txt_mark" placeholder="e.g., 72.30" required/></td>
+                </tr>
+                 <tr>
+                    <td>No. of backlogs</td>
+                     <td><label for="txt_backlog"></label>
+                         <input type="text" name="txt_backlog" id="txt_backlog" placeholder="Enter number of backlogs" required/></td>
+                </tr>
+                <tr>
+                            <td>Photo</td>
+                       <td><label for="txt_photo"></label>
+                      <input type="file" name="txt_photo" id="txt_photo" accept="image/*" required/></td>
+                       </tr>
+                <tr>
+                              <td>Password</td>
+                             <td><label for="txt_password"></label>
+                                 <input type="password" name="txt_password" id="txt_password" placeholder="Min 6 characters" required/></td>
+                </tr>
+                <tr>
+                             <td colspan="2"><input type="submit" name="btn_submit" id="btn_submit" value="Register" />
+                            <input type="reset" name="btn_cancel" id="btn_cancel" value="Reset" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}

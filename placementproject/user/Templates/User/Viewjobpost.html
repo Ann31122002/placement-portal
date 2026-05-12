@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Jobpost</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <table class="table table-bordered table-hover " align="center" border="2" >
+            <tr>
+                <td>Sno</td>
+                <td> CompanyName</td>
+                <td> Details</td>
+                <td> CGPA Criteria</td>
+                <td> File</td>
+                <td> Last date</td>
+                <!--<td>Action</td>-->
+             </tr>
+             {% for i in data %}
+             <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.placement_companyname}}</td>
+                <td>{{i.placement_details}}</td>
+                <td>{{i.placement_minmark}}</td>
+                <td><a href="{{i.placement_file_doc.url}}">View File</a></td>
+                <td>{{i.placement_lastdate}}</td>
+             </tr>
+            {% endfor %}
+            </table>    
+</body>
+</html>

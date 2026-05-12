@@ -1,0 +1,40 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <canvas id="barChart"></canvas>
+
+<script>
+    $(document).ready(function () {
+        var ur = "{% url 'Users:chart' %}"; // Update with your actual URL name
+
+        $.ajax({
+            url: ur,
+            method: "GET",
+            success: function (data) {
+                var ctx = document.getElementById("barChart").getContext("2d");
+
+                new Chart(ctx, {
+                    type: "bar",
+                    data: {
+                        labels: data.labels, // Department names
+                        datasets: [{
+                            label: "Department Count",
+                            data: data.data, // Count of departments
+                            backgroundColor: "rgba(54, 162, 235, 0.6)",
+                            borderColor: "rgba(54, 162, 235, 1)",
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            },
+        });
+    });
+</script>

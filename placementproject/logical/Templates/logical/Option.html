@@ -1,0 +1,54 @@
+{% extends 'Admin/JobPost.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Option</title>
+</head>
+<body><br><br><br>
+    <form method="post">
+        {% csrf_token %}
+        <table class="table table-bordered table-hover " align="center" border="2">
+            <tr>
+                <td>Option </td>
+                <td><input type="text" name="txt_option" placeholder="Enter Options" required></td>
+                <td>
+                         <input type="radio" name="txt_button" value="True">True
+                         <input type="radio" name="txt_button" value="False">False
+                 </td>
+    <tr>
+       
+        <td colspan="4" align="center">
+        
+            <input type="submit" name="btnsubmit" class="btn btn-primary"style="background-color: #44d2f6; color: white;"value="SUBMIT">
+         </td>
+        </tr>
+    </table>   
+    {% if msg %} 
+    <script>
+        alert("{{msg}}")
+        window.location = "{% url 'Logical:option' id %}"
+    </script>
+    {% endif %}
+<table class="table table-bordered" align="center" border="2">
+    <tr>
+        <td>Sno</td>
+        <td>Choice</td>
+        <td>Correct</td>
+        <td>Action</td>
+    </tr>
+    {% for i in data %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{i.questionanswer_choice}}</td>
+        <td>{{i.status}}</td>
+        <td></td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
+{% endblock %}

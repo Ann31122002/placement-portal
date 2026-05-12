@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Interview Result</title>
+<style>
+body { font-family: Arial, sans-serif; background:#f0f0f0; padding:30px; text-align:center; }
+.container { background:#fff; border-radius:8px; padding:30px; display:inline-block; box-shadow:0 4px 8px rgba(0,0,0,0.1);}
+video { width:100%; max-width:640px; border-radius:8px; margin-top:10px; }
+a { display:inline-block; margin-top:20px; background:#007bff; color:white; padding:10px 20px; border-radius:5px; text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Interview Result</h1>
+    <p><strong>Question:</strong> {{ response.question.text }}</p>
+    <p><strong>Score:</strong> {{ response.score }}/100</p>
+    <p><strong>Feedback:</strong> {{ response.feedback }}</p>
+    <video src="{{ response.video_file.url }}" controls></video>
+    <br>
+    <a href="{% url 'Users:hr_interview' %}">Back to Interview</a>
+    <a href="{% url 'Users:Interview' %}">Back to HomePage</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aptitude Formulas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+
+        .content-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #1f2937;
+            border-bottom: 3px solid #06b6d4; /* Teal accent color for Resources */
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .sub-header {
+            font-size: 18px;
+            color: #4b5563;
+            margin-bottom: 40px;
+        }
+
+        /* Download Card Styling */
+        .download-card {
+            padding: 30px;
+            border: 2px dashed #06b6d4; /* Dashed teal border */
+            border-radius: 10px;
+            background-color: #e0f7fa; /* Light teal background */
+            margin-bottom: 30px;
+        }
+
+        .download-card i {
+            font-size: 60px;
+            color: #06b6d4;
+            margin-bottom: 20px;
+        }
+
+        .download-card h2 {
+            font-size: 24px;
+            color: #0e7490;
+            margin-bottom: 15px;
+        }
+
+        .download-card p {
+            color: #4b5563;
+            margin-bottom: 20px;
+        }
+
+        /* Button Styling */
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 30px;
+            background-color: #06b6d4;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-download:hover {
+            background-color: #0891b2;
+        }
+
+        .btn-download i {
+            font-size: 18px;
+            margin-right: 10px;
+            color: #fff; /* Override icon color for button */
+        }
+
+        /* Back Link Styling */
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .back-link i {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-container">
+        <h1>Aptitude Formulas Resource Center</h1>
+        <p class="sub-header">Quickly access and download essential mathematical and logical formulas for your preparation.</p>
+
+        <div class="download-card">
+            <i class="fas fa-file-pdf"></i>
+            <h2>Comprehensive Formula Cheat Sheet (PDF)</h2>
+            <p>This downloadable PDF covers key formulas for **Quantitative Aptitude** (e.g., Time & Work, Percentage, Profit & Loss) and **Logical Reasoning** (e.g., series rules).</p>
+            
+            <a href="path/to/your/formulas.pdf" class="btn-download" download>
+                <i class="fas fa-download"></i> Download Formulas (PDF)
+            </a>
+        </div>
+        
+        <p>Use these formulas as a quick reference tool to ensure you have all necessary concepts committed to memory before your next test.</p>
+
+        <a href="{% url 'Users:Aptitude' %}" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Preparation Dashboard
+        </a>
+    </div>
+</body>
+</html>

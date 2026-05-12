@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aptitude Homepage - Revised</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* General Reset and Font */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px; 
+            background-color: #ffffff;
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.05); 
+            padding: 30px 20px;
+            border-right: 1px solid #e5e7eb;
+        }
+
+        .sidebar h1 {
+            font-size: 26px;
+            color: #1f2937;
+            margin-bottom: 30px;
+            font-weight: 700;
+            border-bottom: 2px solid #2563eb;
+            padding-bottom: 10px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 16px;
+            display: flex; 
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar ul li a i {
+            margin-right: 12px;
+            font-size: 18px;
+            color: #9ca3af;
+            width: 20px; 
+        }
+
+        .sidebar ul li a:hover,
+        .sidebar ul li a.active {
+            background-color: #eff6ff; 
+            color: #1d4ed8;
+        }
+        
+        .sidebar ul li a:hover i {
+            color: #2563eb;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .header h2 {
+            font-size: 32px;
+            color: #1f2937;
+            font-weight: 600;
+        }
+
+        .header .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .header .user-info .avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #2563eb;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .header .user-info span {
+            color: #4b5563;
+            font-size: 16px;
+        }
+
+        .header .user-info a {
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.2s;
+        }
+
+        .header .user-info a:hover {
+            text-decoration: underline;
+            color: #1d4ed8;
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 25px;
+        }
+
+        .card {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border-top: 5px solid transparent; 
+        }
+
+        .card:hover {
+            transform: translateY(-8px); 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: #2563eb; 
+        }
+
+        .card h3 {
+            font-size: 22px;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            color: #6b7280;
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+        
+        /* Card Type Specific Colors (UPDATED) */
+        .card.practice { border-top-color: #2563eb; }
+        .card.tests { border-top-color: #16a34a; }
+        .card.dashboard { border-top-color: #f59e0b; }
+        .card.resume { border-top-color: #8b5cf6; } /* NEW COLOR */
+        .card.training { border-top-color: #ef4444; } /* NEW COLOR */
+        .card.resources { border-top-color: #06b6d4; }
+        
+        /* Icon color adjustments for cards (UPDATED) */
+        .card.practice .card-icon { color: #2563eb; }
+        .card.tests .card-icon { color: #16a34a; }
+        .card.dashboard .card-icon { color: #f59e0b; }
+        .card.resume .card-icon { color: #8b5cf6; }
+        .card.training .card-icon { color: #ef4444; }
+        .card.resources .card-icon { color: #06b6d4; }
+
+
+        .card .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 15px;
+            margin-right: 10px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .btn-blue {
+            background-color: #2563eb;
+        }
+
+        .btn-blue:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-green {
+            background-color: #16a34a;
+        }
+
+        .btn-green:hover {
+            background-color: #15803d;
+        }
+        
+        .btn-purple {
+            background-color: #8b5cf6;
+        }
+        
+        .btn-purple:hover {
+            background-color: #7c3aed;
+        }
+
+
+        .card a:not(.btn) {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .card a:not(.btn):hover {
+            text-decoration: underline;
+            color: #1d4ed8;
+        }
+
+        .card .highlight {
+            font-weight: bold;
+            color: #ef4444; 
+        }
+
+        .card .timestamp {
+            color: #9ca3af;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        .card ul {
+            list-style: none;
+            margin-top: 10px;
+            padding: 0;
+        }
+
+        .card ul li {
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+            border-bottom: 1px dashed #e5e7eb;
+        }
+        
+        .card ul li:last-child {
+             border-bottom: none;
+             margin-bottom: 0;
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+             .sidebar {
+                width: 220px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                box-shadow: none;
+                border-right: none;
+                border-bottom: 1px solid #e5e7eb;
+            }
+            
+            .sidebar h1 {
+                text-align: center;
+                border-bottom: none;
+            }
+            
+            .sidebar ul {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .sidebar ul li {
+                width: 50%;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .header h2 {
+                font-size: 28px;
+            }
+            
+            .header .user-info {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h1>Placement Portal</h1>
+            <ul>
+                <li><a href="{% url 'Users:HomePage' %}"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="{% url 'Users:ViewPraticeQuestion' %}" class="active"><i class="fas fa-clipboard-list"></i> Pratice Questions</a></li>
+                <li><a href="{% url 'Users:viewexam' %}"><i class="fas fa-pencil-alt"></i> Attend Exam</a></li>
+                <li><a href="{% url 'Users:examnotification' %}"><i class="fas fa-lightbulb"></i> Exam Notifications</a></li>
+                <li><a href="{% url 'Users:interviewtips' %}"><i class="fas fa-lightbulb"></i> Interview Tips</a></li>
+                <li><a href="{% url 'Users:resume' %}"><i class="fas fa-file-alt"></i> Resume making</a></li>
+                <li><a href="{% url 'Users:Profile' %}"><i class="fas fa-user-circle"></i> Profile</a></li>
+                <li><a href="{% url 'Users:Logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <header class="header">
+                <h2>Aptitude Preparation</h2>
+                <div class="user-info">
+                    <span id="welcome-message">Welcome</span>
+                    <div class="avatar">U</div> 
+                    <a href="{% url 'Users:Profile' %}">Profile</a>
+                </div>
+            </header>
+
+            <div class="grid">
+                <div class="card practice">
+                    <i class="fas fa-brain card-icon"></i>
+                    <h3>Aptitude Practice</h3>
+                    <p>Sharpen your skills with hundreds of practice questions across all topics.</p>
+                    <a href="{% url 'Users:ViewPraticeQuestion' %}" class="btn btn-blue" onclick="trackClick('Practice Questions')">Start Practice</a>
+                    
+                </div>
+
+                <div class="card tests">
+                    <i class="fas fa-stopwatch card-icon"></i>
+                    <h3>Tests</h3>
+                    <p>Simulate exam conditions with full-length timed aptitude tests.</p>
+                    <a href="{% url 'Users:viewexam' %}" class="btn btn-green" onclick="trackClick('Exams')">View Exams</a>
+                </div>
+
+                <div class="card dashboard">
+                    <i class="fas fa-chart-bar card-icon"></i>
+                    <h3>Performance Dashboard</h3>
+                    <p>Track your progress, identify weak areas, and view detailed analytics.</p>
+                    <a href="{% url 'Users:looker' %}">View Dashboard</a>
+                </div>
+
+                <div class="card resume">
+                    <i class="fas fa-id-card-alt card-icon"></i>
+                    <h3>Resume Preparation</h3>
+                    <p>Build a professional resume with templates, tips, and expert guidance.</p>
+                    <a href="{% url 'Users:resume' %}" class="btn btn-purple" onclick="trackClick('Resume Preparation')">Start Building</a>
+                    <p class="timestamp" id="test-timestamp">Last updated: Loading...</p>
+                </div>
+
+                <div class="card training">
+                    <i class="fas fa-laptop-code card-icon"></i>
+                    <h3>Technical & Interview Modules</h3>
+                    <p>Structured courses to master coding concepts and ace your interviews.</p>
+                    <ul>
+                        <li>Technical Preparation <a href="{% url 'Users:Interview' %}">View</a></li>
+                        <li>Interview Preparation<a href="{% url 'Users:Interview' %}">View</a></li>
+                        <!-- <li>Verbal Ability <a href="/users/training/verbal/">View</a></li> -->
+                    </ul>
+                </div>
+
+                <div class="card resources">
+                    <i class="fas fa-download card-icon"></i>
+                    <h3>Resources</h3>
+                    <p>Access essential formulas, guides, and tips for quick reference.</p>
+                    <ul>
+                        <li>Aptitude Formulas <a href="{% url 'Users:Aptitude_Formulas' %}">Download</a></li>
+                        <li>Practice Guides <a href="{% url 'Users:Practice_Guides' %}">View</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update welcome message with user name (replace with actual user data from backend)
+        function setWelcomeMessage() {
+            const userName = "{{ user.first_name }}" || "User"; // Placeholder for Django template variable
+            const welcomeElement = document.getElementById('welcome-message');
+            welcomeElement.textContent = `Welcome, ${userName.split(' ')[0]}!`;
+            
+            // Set avatar initial
+            const avatarElement = document.querySelector('.avatar');
+            avatarElement.textContent = userName.charAt(0).toUpperCase();
+        }
+
+        // Update timestamp dynamically (kept for display but function is now repurposed)
+        function updateTimestamp() {
+            const timestampElement = document.getElementById('test-timestamp');
+            const now = new Date();
+            const options = {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true,
+                timeZoneName: 'short',
+                month: 'short',
+                day: '2-digit',
+                year: 'numeric'
+            };
+            // Note: Repurposing the timestamp field for "Resume Preparation" card
+            timestampElement.textContent = `Quick access to resume tools.`; 
+        }
+
+        // Track button clicks (for analytics or debugging)
+        function trackClick(buttonName) {
+            console.log(`${buttonName} button clicked`);
+            // Add analytics or redirect logic here
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            setWelcomeMessage();
+            updateTimestamp();
+        });
+    </script>
+</body>
+</html>

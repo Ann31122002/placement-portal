@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Classic Resume Builder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f8f8;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 30px 10px;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 95%;
+            max-width: 1400px;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        /* Resume Preview Styles (Template Match) */
+        .resume-preview {
+            padding: 40px;
+            height: 90vh; /* Set a fixed viewing height */
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            background: #fff;
+            border-radius: 8px;
+            font-family: serif; /* Classic look */
+            line-height: 1.4;
+            position: relative; 
+            
+            /* CSS Variables for Customization - CLEANED */
+            --accent-color: #004e92; 
+            --text-color: #333333; 
+            color: var(--text-color); 
+        }
+
+        /* Photo Styles */
+        .resume-photo {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 40px; 
+            z-index: 10;
+            overflow: hidden;
+            border-radius: 50%; 
+            border: 2px solid var(--accent-color);
+        }
+        .photo-position-right {
+            right: 40px;
+        }
+        .photo-position-left {
+            left: 40px;
+        }
+        .resume-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Header Layout Adjustment for Photo */
+        .photo-layout.top-right {
+            padding-right: 120px; 
+        }
+        .photo-layout.top-left {
+            padding-left: 120px; 
+        }
+
+        .resume-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 5px;
+            color: var(--accent-color);
+        }
+        .resume-contact-bar {
+            text-align: center;
+            font-size: 0.75rem;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            color: var(--text-color);
+        }
+        .resume-contact-bar span:not(:last-child)::after {
+            content: " | ";
+            font-weight: 400;
+            color: #888;
+        }
+        .resume-section-heading {
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            margin-top: 20px;
+            margin-bottom: 5px;
+            padding-bottom: 3px;
+            border-bottom: 1px solid var(--accent-color);
+            letter-spacing: 0.5px;
+            color: var(--accent-color);
+        }
+
+        /* Employment/Education Item Styles */
+        .resume-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 10px;
+        }
+        .resume-item-title {
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 1;
+            margin-right: 15px;
+        }
+        .resume-item-date {
+            font-style: italic;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            text-align: right;
+            flex-shrink: 0;
+        }
+        .resume-subheader-detail {
+             font-size: 0.85rem;
+             font-weight: 400; 
+             margin-top: 3px;
+        }
+        .resume-bullet-list {
+            list-style-type: disc;
+            margin-left: 20px;
+            padding-left: 0;
+            margin-top: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+        }
+        .resume-bullet-list li {
+            margin-bottom: 2px;
+            padding-left: 5px;
+        }
+        
+        /* Skills section match */
+        .resume-details {
+             font-size: 0.8rem;
+             margin-top: 5px;
+             margin-bottom: 15px;
+        }
+
+        /* Form/Control Styles */
+        .form-control {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 6px;
+        }
+        .section-title-form {
+            font-weight: 700;
+            color: #333;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px dashed #ccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .remove-section {
+            background: #e74c3c;
+            color: white;
+            padding: 3px 6px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: background 0.3s;
+        }
+        button {
+            background: #333;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: 600;
+            width: 100%;
+        }
+        button:hover {
+            background: #000;
+        }
+        .btn-primary {
+            background: #10B981; 
+        }
+        .btn-primary:hover {
+            background: #059669;
+        }
+
+
+        /* Print Styles - CRITICAL FOR PDF GENERATION VIA WINDOW.PRINT() */
+        @media print {
+            body, .container, html {
+                background: white !important;
+                box-shadow: none !important;
+                display: block !important;
+                width: 210mm !important; /* A4 Width */
+                height: 297mm !important; /* A4 Height */
+                padding: 0 !important;
+                margin: 0 auto !important;
+                overflow: visible !important;
+            }
+            .p-4 {
+                display: none !important; /* Hide input form */
+            }
+            .resume-preview {
+                height: 297mm !important;
+                overflow: visible !important;
+                width: 210mm !important;
+                border: none !important;
+                box-shadow: none !important;
+                padding: 15mm !important; /* Set all-around margins for A4 print */
+                box-sizing: border-box;
+                margin: 0 !important;
+                font-family: "Times New Roman", serif !important; 
+                position: static !important; 
+            }
+            .resume-name, .resume-section-heading, .resume-item-title, .resume-item-date, .resume-bullet-list, .resume-details {
+                color: #000 !important; 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important;
+            }
+            /* Adjust photo for print */
+            .resume-photo {
+                position: absolute !important;
+                top: 15mm !important; /* Match print padding */
+                right: 15mm !important; 
+                left: auto !important;
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                border: 1px solid #000;
+            }
+            .photo-layout.top-right {
+                padding-right: 0 !important; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="p-4 bg-gray-50 rounded-lg shadow-inner">
+            <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Executive Resume Builder</h1>
+            <p class="text-sm text-center text-gray-500 mb-4">Uses the classic, monochromatic template you provided.</p>
+            <form id="resumeForm" class="space-y-4">
+                
+                <div id="personalSection" class="p-3 border rounded-lg bg-white">
+                    <label class="section-title-form text-lg mb-3 block">Personal & Contact</label>
+                    <input type="text" id="name" placeholder="Full Name (e.g., Charles Bloomberg)" value="Charles Bloomberg" class="form-control w-full mt-2">
+                    <div class="grid grid-cols-2 gap-3 mt-3">
+                        <input type="text" id="location" placeholder="City, State, Country" value="Seoul, South Korea" class="form-control">
+                        <input type="text" id="phone" placeholder="Phone Number (e.g., (621) 799-5548)" value="(621) 799-5548" class="form-control">
+                        <input type="email" id="email" placeholder="Email (e.g., email@domain.com)" value="charlesbloomberg@gmail.com" class="form-control">
+                        <input type="text" id="linkedin" placeholder="LinkedIn/Website URL" value="in/cbloomberg" class="form-control">
+                    </div>
+                </div>
+
+                <div id="appearanceSection" class="p-3 border rounded-lg bg-white">
+                    <label class="section-title-form text-lg mb-3 block">Appearance & Photo</label>
+                    <div class="grid grid-cols-2 gap-3 mt-3">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Accent/Header Color</label>
+                            <input type="color" id="accentColor" value="#004e92" class="form-control w-full h-10 p-1">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Text Color</label>
+                            <input type="color" id="textColor" value="#333333" class="form-control w-full h-10 p-1">
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <label class="block text-sm font-medium mb-1">Upload Photo (JPG/PNG)</label>
+                        <input type="file" id="photoFile" accept="image/png, image/jpeg" class="form-control w-full" onchange="handlePhotoUpload(this.files)">
+                    </div>
+                    <div class="mt-3">
+                        <label class="block text-sm font-medium mb-1">Photo Position</label>
+                        <select id="photoPosition" class="form-control w-full">
+                            <option value="none">Do Not Show Photo</option>
+                            <option value="top-right">Top Right</option>
+                            <option value="top-left">Top Left</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="profileSection" class="p-3 border rounded-lg bg-white">
+                    <label class="section-title-form text-lg mb-3 block">Professional Summary <span class="remove-section" onclick="removeSection('profileSection')">Remove</span></label>
+                    <textarea id="profile" class="form-control w-full h-28" placeholder="Write a summary...">Passion for building inspiring companies through industry-leading tech, design, and execution. An experienced early-stage global executive with an economics degree from the University of Wisconsin - Madison. Looking to join as a global startup consultant.</textarea>
+                </div>
+                
+                <div id="experienceSection" class="p-3 border rounded-lg bg-white">
+                    <label class="section-title-form text-lg mb-3 block">Professional Experience <span class="remove-section" onclick="removeSection('experienceSection')">Remove</span></label>
+                    <textarea id="experience" class="form-control w-full h-64" placeholder="Use ** for title line and • for bullets. Dates/Location should be on the right.
+Example:
+**CEO & Founder | Rezi** August 2015 – Present, Seoul, South Korea
+• Built Rezi - the most loved resume software in the world...
+• Full time employees: 123,390 users; $650,000 total raised investment; $8,000,000 valuation.">**CEO & Founder | Rezi** August 2015 – Present, Seoul, South Korea
+• Built Rezi - the most loved resume software in the world, trusted by over 124,000 users.
+• Founded Rezi at the age of 22. At 23, successfully globalized into South Korea growing to be South Korea's leading English resume company. Grew to be South Korea's leading English resume company.
+• Full time employees: 123,390 users; $650,000 total raised investment; $8,000,000 valuation.
+
+**Web Developer | Example Company** May 2015 – November 2015, La Crosse, WI
+• Executed website redesign of kaplancleantech.com using Expression Engine as a CMS while working with marketing and sales teams.
+• Optimized 3 landing page variants using HTML, A/B testing software and customer feedback to increase leads for sales teams.
+
+**Marketing Analyst | Example Company** November 2014 – May 2015, La Crosse, WI
+• Ran and implemented Tableau dashboards to track 6 marketing KPIs. Used data to create reports circulated amongst leadership.
+• Collaborated with marketing specialists to improve marketing strategies to maximize ROI, such as introducing Facebook retargeting.</textarea>
+                </div>
+
+                <div id="educationSection" class="p-3 border rounded-lg bg-white">
+                    <label class="section-title-form text-lg mb-3 block">Education <span class="remove-section" onclick="removeSection('educationSection')">Remove</span></label>
+                    <textarea id="education" class="form-control w-full h-24" placeholder="Degree | University | Optional Details
+Example:
+Bachelor of Science in Economics with a Mathematics Emphasis | University of Wisconsin - Madison | Powers-Knapp Scholar">Bachelor of Science in Economics with a Mathematics Emphasis | University of Wisconsin - Madison | Powers-Knapp Scholar - 2014</textarea>
+                </div>
+
+                <div id="skillsSection" class="p-3 border rounded-lg bg-white">
+                    <label class="section-title-form text-lg mb-3 block">Expert-Level Skills <span class="remove-section" onclick="removeSection('skillsSection')">Remove</span></label>
+                    <textarea id="skills" class="form-control w-full h-20" placeholder="Leadership, Speaking, Fundraising, Product Development...">Leadership, Speaking, Fundraising, Product Development, Communication, Partnerships, International Marketing
+Front End: HTML, CSS, Bootstrap, Webflow | Design: Photoshop, Illustrator, Sketch</textarea>
+                </div>
+                
+                <div id="customSections"></div>
+                
+                <button type="button" onclick="addCustomSection()" class="bg-gray-700 hover:bg-gray-800 transition">Add Custom Section (e.g., Awards)</button>
+                <button type="button" onclick="generateResume()" class="mt-4">Generate/Refresh Preview</button>
+                <button type="button" onclick="window.print()" class="mt-2 btn-primary hover:bg-green-800">✅ Print to PDF (Recommended)</button>
+            </form>
+        </div>
+        
+        <div class="resume-preview" id="resumePreview">
+            <div id="templateContent" class="p-2"></div>
+            <p id="timestamp" class="text-xs text-gray-400 mt-6 text-right print:hidden"></p>
+        </div>
+    </div>
+
+    <script>
+        let customSectionCount = 0;
+        const removedSections = new Set();
+        let photoDataUrl = ''; // Global variable to store the Base64 photo string
+        let nameElement, contactBarElement, timestampElement;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            nameElement = document.getElementById('name');
+            timestampElement = document.getElementById('timestamp');
+
+            // Attach event listeners for immediate preview refresh
+            const formInputs = document.querySelectorAll('#resumeForm input, #resumeForm textarea');
+            formInputs.forEach(input => {
+                // Skip the file input, as it's handled by handlePhotoUpload
+                if (input.id !== 'photoFile') {
+                    input.addEventListener('input', generateResume);
+                }
+            });
+            
+            // Add listeners for color and position inputs
+            document.getElementById('accentColor').addEventListener('input', generateResume);
+            document.getElementById('textColor').addEventListener('input', generateResume);
+            document.getElementById('photoPosition').addEventListener('change', generateResume);
+
+            // Initial generation
+            generateResume();
+        });
+
+        // --- NEW PHOTO UPLOAD HANDLER ---
+        function handlePhotoUpload(files) {
+            if (files.length === 0) {
+                photoDataUrl = '';
+                generateResume();
+                return;
+            }
+
+            const file = files[0];
+            const reader = new FileReader();
+
+            // When the file is loaded, this function runs
+            reader.onload = function(e) {
+                photoDataUrl = e.target.result; // Store the Base64 string
+                generateResume(); // Refresh the resume preview
+            };
+
+            // Read the file as a Data URL (Base64)
+            reader.readAsDataURL(file);
+        }
+
+
+        // --- Core Formatting Logic ---
+        function removeSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                // If it's a custom section, remove the element entirely
+                if (sectionId.startsWith('customSection')) {
+                    section.remove();
+                    removedSections.delete(sectionId); 
+                } else {
+                    // For fixed sections, just hide the input form and mark as removed
+                    section.style.display = 'none'; 
+                    removedSections.add(sectionId);
+                }
+            }
+            generateResume();
+        }
+
+        function addCustomSection() {
+            customSectionCount++;
+            const customId = `customSection${customSectionCount}`;
+            const html = `
+                <div id="${customId}" class="p-3 border rounded-lg bg-white">
+                    <label class="section-title-form text-lg mb-3 block">
+                        <input type="text" id="${customId}Title" placeholder="Custom Section Title (e.g., AWARDS)" class="form-control w-3/4 inline-block">
+                        <span class="remove-section" onclick="removeSection('${customId}')">Remove</span>
+                    </label>
+                    <textarea id="${customId}Content" class="form-control w-full h-24" placeholder="Content for this section..."></textarea>
+                </div>
+            `;
+            document.getElementById('customSections').insertAdjacentHTML('beforeend', html);
+            
+            // Add listeners to new inputs
+            document.getElementById(`${customId}Title`).addEventListener('input', generateResume);
+            document.getElementById(`${customId}Content`).addEventListener('input', generateResume);
+            
+            removedSections.delete(customId);
+            
+            generateResume();
+        }
+        
+        // Function to process content for Experience, Education, and Custom sections
+        function formatSectionContent(content, sectionTitle) {
+            const lines = content.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+            let result = '';
+            let currentItemHtml = '';
+            let currentListItems = [];
+
+            // Helper to finalize the current item
+            const finalizeItem = () => {
+                if (currentListItems.length > 0) {
+                    currentItemHtml += `<ul class="resume-bullet-list">${currentListItems.join('')}</ul>`;
+                    currentListItems = [];
+                }
+                result += currentItemHtml;
+                currentItemHtml = '';
+            };
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
+
+                if (line.startsWith('**')) {
+                    // This is a new Job/Degree Title Line
+                    finalizeItem(); // Finalize the previous entry
+
+                    // Extract the Title/Company and the Date/Location string
+                    const titleDateMatch = line.match(/^\*\*(.*?)\*\*(.*)$/);
+                    if (titleDateMatch) {
+                        const titleAndCompany = titleDateMatch[1].trim(); 
+                        const dateAndLocation = titleDateMatch[2].trim(); 
+
+                        // Education uses the ' | ' separator for the entire title area
+                        if (sectionTitle === 'EDUCATION') {
+                             currentItemHtml = `
+                                 <div class="resume-item-header">
+                                     <p class="resume-item-title">${titleAndCompany}</p>
+                                     <span class="resume-item-date">${dateAndLocation}</span>
+                                 </div>
+                            `;
+                        } else {
+                            // Experience/Consultancy separates the main title and sub-details
+                            const parts = titleAndCompany.split('|').map(p => p.trim());
+                            const mainTitle = parts[0] || '';
+                            const subDetails = parts.slice(1).join(' | ');
+
+                            currentItemHtml = `
+                                <div class="resume-item-header">
+                                    <p class="resume-item-title">${mainTitle}</p>
+                                    <span class="resume-item-date">${dateAndLocation}</span>
+                                </div>
+                            `;
+                             if (subDetails) {
+                                 currentItemHtml += `<p class="resume-subheader-detail">${subDetails}</p>`;
+                            }
+                        }
+                    }
+                } else if (line.match(/^[\*\•\-] /)) {
+                    // This is a bullet point
+                    let cleanLine = line.replace(/^[\*\•\-] /, '').trim();
+                    currentListItems.push(`<li>${cleanLine}</li>`);
+                } else {
+                    // This is generic descriptive text (e.g., in a custom section)
+                    if (currentListItems.length > 0) {
+                        finalizeItem(); 
+                    }
+                    if (line.length > 0) {
+                         currentItemHtml += `<p class="resume-subheader-detail">${line}</p>`;
+                    }
+                }
+            }
+            
+            // Finalize the last entry after the loop finishes
+            finalizeItem();
+
+            return result;
+        }
+
+        function generateResume() {
+            const name = nameElement.value.toUpperCase();
+            const phone = document.getElementById('phone').value;
+            const linkedin = document.getElementById('linkedin').value;
+            const email = document.getElementById('email').value;
+            const location = document.getElementById('location').value;
+
+            // --- Read Customization Inputs ---
+            const accentColor = document.getElementById('accentColor').value;
+            const textColor = document.getElementById('textColor').value;
+            const photoPosition = document.getElementById('photoPosition').value;
+
+            // 1. Set Colors
+            const previewElement = document.getElementById('resumePreview');
+            previewElement.style.setProperty('--accent-color', accentColor);
+            previewElement.style.setProperty('--text-color', textColor);
+
+            // 2. Handle Photo (Uses the global photoDataUrl)
+            let photoHtml = '';
+            let headerLayoutClass = '';
+            let photoPlacementClass = '';
+
+            if (photoDataUrl && photoPosition !== 'none') { // Use the Base64 data string
+                photoPlacementClass = (photoPosition === 'top-right') ? 'photo-position-right' : 'photo-position-left';
+                headerLayoutClass = (photoPosition === 'top-right') ? 'top-right' : 'top-left';
+
+                photoHtml = `
+                    <div class="resume-photo ${photoPlacementClass}">
+                        <img src="${photoDataUrl}" alt="Professional Photo">
+                    </div>
+                `;
+            }
+            
+            // Build Contact Bar
+            const contactItems = [location, email, phone, `in/${linkedin.replace(/^(https?:\/\/)?(www\.)?linkedin\.com\/in\//i, '')}`]
+                .filter(item => item.trim().length > 0)
+                .map(item => `<span class="whitespace-nowrap">${item}</span>`)
+                .join('');
+
+            let templateContent = `
+                ${photoHtml}
+                <div class="photo-layout ${headerLayoutClass}">
+                    <p class="resume-name">${name}</p>
+                    <div class="resume-contact-bar">${contactItems}</div>
+                </div>
+            `;
+            
+            // --- Section Content Generation ---
+            
+            // 1. Professional Summary / Profile
+            if (!removedSections.has('profileSection')) {
+                const profile = document.getElementById('profile').value || '';
+                if (profile) {
+                    templateContent += `
+                        <p class="resume-section-heading">PROFESSIONAL SUMMARY</p>
+                        <p class="resume-details">${profile.replace(/\n/g, '<br>')}</p>
+                    `;
+                }
+            }
+
+            // 2. Experience 
+            if (!removedSections.has('experienceSection')) {
+                const experience = document.getElementById('experience').value || '';
+                if (experience) {
+                    templateContent += `
+                        <p class="resume-section-heading">PROFESSIONAL EXPERIENCE</p>
+                        ${formatSectionContent(experience, 'PROFESSIONAL EXPERIENCE')}
+                    `;
+                }
+            }
+
+            // 3. Education 
+            if (!removedSections.has('educationSection')) {
+                const education = document.getElementById('education').value || '';
+                if (education) {
+                    templateContent += `
+                        <p class="resume-section-heading">EDUCATION</p>
+                        ${formatSectionContent(education, 'EDUCATION')}
+                    `;
+                }
+            }
+
+            // 4. Skills 
+            if (!removedSections.has('skillsSection')) {
+                const skills = document.getElementById('skills').value || '';
+                if (skills) {
+                    const skillGroups = skills.split('\n\n').map(group => group.trim()).filter(g => g.length > 0);
+                    templateContent += `
+                        <p class="resume-section-heading">EXPERT-LEVEL SKILLS</p>
+                        ${skillGroups.map(group => `<p class="resume-details">${group}</p>`).join('')}
+                    `;
+                }
+            }
+
+            // 5. Custom Sections
+            for (let i = 1; i <= customSectionCount; i++) {
+                const customId = `customSection${i}`;
+                if (!removedSections.has(customId)) {
+                    const titleInput = document.getElementById(`${customId}Title`);
+                    const contentInput = document.getElementById(`${customId}Content`);
+                    if (titleInput && contentInput && contentInput.value.trim()) {
+                        const title = titleInput.value.toUpperCase() || 'CUSTOM SECTION';
+                        const content = contentInput.value;
+                        templateContent += `
+                            <p class="resume-section-heading">${title}</p>
+                            ${formatSectionContent(content, title)}
+                        `;
+                    }
+                }
+            }
+
+            // Update Preview
+            document.getElementById('templateContent').innerHTML = templateContent;
+            
+            // Update Timestamp
+            const now = new Date();
+            timestampElement.textContent = `Generated: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+        }
+    </script>
+</body>
+</html>

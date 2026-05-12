@@ -1,0 +1,6 @@
+User,User_Email,Quiz_Type,Question_Number,Question_Text,Selected_Answer,Correct_Answers,Is_Correct,Is_Incorrect,Response_Timestamp,Time_Taken_Question_Seconds,Total_Quiz_Time_Seconds
+guest_p37ra3ym,guest_p37ra3ym@quiz.com,e,1,e,e,e,1,0,2025-10-26T04:16:00.997842+00:00,65,20895.85
+guest_p37ra3ym,guest_p37ra3ym@quiz.com,e,1,e,e,e,1,0,2025-10-26T08:47:41.109133+00:00,65,20895.85
+guest_p37ra3ym,guest_p37ra3ym@quiz.com,e,1,e,e,e,1,0,2025-10-26T09:49:58.938288+00:00,65,20895.85
+guest_p37ra3ym,guest_p37ra3ym@quiz.com,e,1,e,e,e,1,0,2025-10-26T09:50:33.718454+00:00,34.78,20895.85
+guest_p37ra3ym,guest_p37ra3ym@quiz.com,e,1,e,e,e,1,0,2025-10-26T10:04:16.843693+00:00,65,20895.85

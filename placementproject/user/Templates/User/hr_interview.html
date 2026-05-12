@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Video Interview</title>
+<style>
+body { font-family: Arial, sans-serif; background:#f0f0f0; display:flex; justify-content:center; align-items:center; min-height:100vh; margin:0;}
+.container {background:#fff; padding:20px; border-radius:8px; width:100%; max-width:800px; text-align:center; box-shadow:0 4px 8px rgba(0,0,0,0.1);}
+button {padding:10px 20px; border:none; border-radius:5px; color:#fff; cursor:pointer; margin:5px;}
+#startBtn {background:#007bff;} #recordBtn {background:#28a745;} #stopBtn {background:#dc3545;}
+.hidden {display:none;}
+video {width:100%; max-height:400px; border-radius:8px; margin-top:10px;}
+#homeBtnLink {
+    background:#007bff; /* Start Button Color */
+    padding:10px 20px;
+    border:none;
+    border-radius:5px;
+    color:#fff;
+    cursor:pointer;
+    margin:5px;
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Makes it act like a block element for padding/margin */
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>AI Video Interview</h1>
+    <p id="question">Click “Start Interview” to begin!</p>
+    <video id="videoFeed" autoplay muted playsinline></video>
+    <div class="button-group">
+        <button id="startBtn">Start Interview</button>
+        <button id="recordBtn" class="hidden">Record Answer</button>
+        <button id="stopBtn" class="hidden">Stop Recording</button>
+        <a href="{% url 'Users:Interview' %}" id="homeBtnLink">Back to HomePage</a>
+    </div>
+</div>
+
+<script>
+const questions = JSON.parse('{{ questions_json|escapejs }}');
+const csrfToken = '{{ csrf_token }}';
+
+let currentQuestion = 0;
+let mediaRecorder;
+let recordedChunks = [];
+let stream;
+let isRecording = false;
+
+const startBtn = document.getElementById('startBtn');
+const recordBtn = document.getElementById('recordBtn');
+const stopBtn = document.getElementById('stopBtn');
+const questionEl = document.getElementById('question');
+
+startBtn.addEventListener('click', startInterview);
+recordBtn.addEventListener('click', startRecording);
+stopBtn.addEventListener('click', stopRecording);
+
+async function startInterview() {
+    currentQuestion = 0;
+    questionEl.textContent = questions[currentQuestion]?.text || "No questions found.";
+    startBtn.classList.add('hidden');
+    recordBtn.classList.remove('hidden');
+    try {
+        stream = await navigator.mediaDevices.getUserMedia({ video:true, audio:true });
+        document.getElementById('videoFeed').srcObject = stream;
+        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.ondataavailable = (e)=> recordedChunks.push(e.data);
+        mediaRecorder.onstop = processRecording;
+    } catch(err) {
+        alert('Error accessing camera/microphone.');
+    }
+}
+
+function startRecording() {
+    if (!isRecording) {
+        recordedChunks = [];
+        mediaRecorder.start();
+        recordBtn.classList.add('hidden');
+        stopBtn.classList.remove('hidden');
+        isRecording = true;
+    }
+}
+
+function stopRecording() {
+    if (isRecording) {
+        mediaRecorder.stop();
+        stopBtn.classList.add('hidden');
+        isRecording = false;
+    }
+}
+
+async function processRecording() {
+    const videoBlob = new Blob(recordedChunks, {type:'video/webm'});
+    const formData = new FormData();
+    formData.append('video', videoBlob, 'response.webm');
+    formData.append('question_id', questions[currentQuestion].id);
+    formData.append('csrfmiddlewaretoken', csrfToken);
+
+    try {
+        const res = await fetch("{% url 'Users:upload_response' %}", {
+            method:'POST',
+            body: formData
+        });
+
+        if (!res.ok) throw new Error("Server returned an error page.");
+        const data = await res.json();
+
+        if (data.status === 'success') {
+            window.location.href = "{% url 'Users:view_result' 0 %}".replace('0', data.response_id);
+        } else {
+            alert('Failed to save response: ' + (data.error || 'Unknown error'));
+        }
+    } catch(err) {
+        alert('Error uploading video: ' + err);
+    }
+}
+</script>
+</body>
+</html>

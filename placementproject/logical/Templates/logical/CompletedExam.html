@@ -1,0 +1,166 @@
+{% extends 'Admin/JobPost.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Completed Exams & Results</title>
+    <style>
+        /* Global Reset and Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5; /* Light background */
+            margin: 0;
+            padding: 30px;
+            color: #333;
+        }
+
+        /* Main Container for Table */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 30px;
+            font-size: 2em;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 10px;
+        }
+
+        /* Table Styling */
+        .exam-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Table Header */
+        .exam-table th {
+            background-color: #343a40; /* Dark header background */
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            border: 1px solid #dee2e6;
+        }
+
+        /* Table Cells */
+        .exam-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #dee2e6;
+            vertical-align: middle;
+        }
+
+        /* Row Striping and Hover Effect */
+        .exam-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9; /* Light stripe */
+        }
+
+        .exam-table tbody tr:hover {
+            background-color: #e9ecef; /* Highlight row on hover */
+        }
+
+        /* Action Column Styling */
+        .action-cell {
+            white-space: nowrap; /* Prevents wrapping of status and link */
+            font-weight: 500;
+        }
+
+        /* Status Styling - On Going */
+        .status-ongoing {
+            color: #ffc107; /* Yellow/Orange */
+            font-weight: bold;
+        }
+
+        /* Status Styling - Completed */
+        .status-completed {
+            color: #28a745; /* Green */
+            font-weight: bold;
+        }
+        
+        /* Link/Button Styling */
+        .action-link {
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+            margin-left: 8px;
+        }
+
+        /* Complete Exam Button */
+        .complete-btn {
+            color: white;
+            background-color: #dc3545; /* Red */
+        }
+
+        .complete-btn:hover {
+            background-color: #c82333;
+        }
+
+        /* View Result Button */
+        .result-btn {
+            color: white;
+            background-color: #007bff; /* Blue */
+        }
+
+        .result-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body><br><br><br>
+    <div class="container">
+        <h1>Examination Status & Results</h1>
+        <table class="exam-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Mark (Total)</th>   
+                    <th>Ques. No</th>
+                    <th>Start Time</th>
+                    <th>Duration (Min)</th>
+                    <th>Status / Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in exam %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.examination_name}}</td> 
+                    <td>{{i.examination_mark}}</td>  
+                    <td>{{i.examination_qno}}</td>    
+                    <td>{{i.start_time}}</td> 
+                    <td>{{i.examination_time}}</td> 
+                    <td class="action-cell">
+                        {% if i.examination_status == 1 %}
+                            <span class="status-ongoing">On Going</span> 
+                            | 
+                            <a href="{% url 'Logical:completeexam' i.id %}" class="action-link complete-btn">Complete Exam</a>
+                        {% else %}
+                            <span class="status-completed">Completed</span>
+                            | 
+                            <a href="{% url 'Logical:viewresult' i.id %}" class="action-link result-btn">View Result</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+{% endblock %}

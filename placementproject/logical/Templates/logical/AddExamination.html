@@ -1,0 +1,228 @@
+{% extends 'Admin/JobPost.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Examination</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+        :root {
+            --color-primary: #1e3a8a; /* Deep Blue */
+            --color-secondary: #44d2f6; /* Bright Cyan (Form Button Color) */
+            --color-hover: #27c1e5;
+            --color-danger: #dc3545; /* Red for Delete */
+            --color-success: #198754; /* Green for Start */
+            --color-info: #0dcaf0; /* Light Blue for Add/Edit */
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--color-primary);
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 10px;
+            font-weight: 700 !important;
+        }
+
+        /* --- Form Styling (Unchanged) --- */
+        .form-card {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+        .form-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+        }
+        .form-table td {
+            padding: 5px 15px;
+            vertical-align: middle;
+        }
+        .form-table tr td:first-child {
+            font-weight: 600;
+            color: #333;
+            width: 30%;
+            text-transform: uppercase;
+        }
+        .form-table input[type="text"],
+        .form-table input[type="time"],
+        .form-table input[type="date"],
+        .form-table select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+        .form-table input:focus, .form-table select:focus {
+            border-color: var(--color-secondary);
+            outline: none;
+            box-shadow: 0 0 5px rgba(68, 210, 246, 0.5);
+        }
+        .btn-custom {
+            background-color: var(--color-secondary);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 0 5px;
+        }
+        .btn-custom:hover {
+            background-color: var(--color-hover);
+        }
+
+        /* --- Data Table Styling (Modified Action Column) --- */
+        .data-table {
+            border-radius: 8px;
+            overflow: hidden;
+            width: 100%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        .data-table thead th {
+            background-color: var(--color-primary);
+            color: white;
+            font-weight: 600;
+            text-align: center;
+            padding: 12px 10px;
+        }
+        .data-table tbody td {
+            text-align: center;
+            padding: 10px;
+            vertical-align: middle;
+        }
+        .data-table tbody tr:nth-child(even) {
+            background-color: #f7f7f7;
+        }
+
+        /* Styling for the new Action Buttons */
+        .action-button-group a {
+            /* Inherit Bootstrap button styles, but override margin/padding for compact look */
+            margin: 3px 0;
+            padding: 4px 8px;
+            font-size: 0.8em;
+            display: block; /* Make each button take its own line */
+            width: 100%; /* Ensure full width within the cell */
+            max-width: 150px; /* Limit button width for aesthetics */
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body><br><br><br>
+    <div class="page-container">
+        <h1>Add Examination</h1>
+
+        <div class="form-card">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table class="form-table" align="center">
+                    <tr>
+                        <td>EXAM TYPE</td>
+                        <td>
+                            <select name="sel_examtype" class="form-select">
+                                <option value="">...Select...</option>
+                                {% for i in examtype %}
+                                <option value="{{i.id}}">{{i.examtype_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+
+                  <tr>
+                    <td>EXAM NAME</td>
+                    <td><input type="text" name="txt_name" id="txt_name" class="form-control" required></td>
+                  </tr>
+                  <tr>
+                    <td>NUMBER OF QUESTIONS</td>
+                    <td><input type="number" name="txt_qno" id="txt_qno" class="form-control" min="1" required></td>
+                  </tr>
+
+                  <tr>
+                    <td>FROM TIME</td>
+                    <td><input type="time" name="txt_ftime" class="form-control" required></td>
+                  </tr>
+
+                  <tr>
+                    <td>TO TIME</td>
+                    <td><input type="time" name="txt_ttime" class="form-control" required></td>
+                  </tr>
+                  <tr>
+                    <td>Date</td>
+                    <td><input type="date" name="txt_date" id="txt_date" class="form-control" required></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" class="btn-custom" value="SUBMIT">
+                        <input type="submit" class="btn-custom" value="CANCEL">
+                    </td>
+                  </tr>
+                </table>
+            </form>
+        </div>
+
+        <table class="table table-bordered data-table" align="center">
+            <thead>
+                <tr>
+                    <th>Sno</th>
+                    <th>Name</th>
+                    <th>Mark</th>
+                    <th>Number of questions</th>
+                    <th>Start Time</th>
+                    <th>Time</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in result %}
+                <tr>
+                   <td>{{forloop.counter}}</td>
+                   <td>{{i.examination_name}}</td>
+                   <td>{{i.examination_mark}}</td>
+                   <td>{{i.examination_qno}}</td>
+                   <td>{{i.start_time}}</td>
+                   <td>{{i.examination_time}}</td>
+                   <td>{{ i.examination_date }}</td>
+                   
+                   <td class="action-button-group">
+                       <a href="{% url 'Logical:delexm' i.id %}" class="btn btn-danger btn-sm">Delete</a>
+                       <a href="{% url 'Logical:addquestions' i.id %}" class="btn btn-info btn-sm">Add Questions</a>
+                       <a href="{% url 'Logical:startexam' i.id %}" class="btn btn-success btn-sm">Start Exam</a>
+                   </td>
+                   
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+      const today = new Date().toISOString().split('T')[0];
+      // Set the minimum selectable date for the date input field
+      document.getElementById('txt_date').setAttribute('min', today);
+    </script>
+</body>
+</html>
+{% endblock %}

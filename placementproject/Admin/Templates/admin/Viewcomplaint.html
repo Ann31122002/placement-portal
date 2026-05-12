@@ -1,0 +1,169 @@
+{% extends 'Admin/JobPost.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Complaints</title>
+    <style>
+        /* Global Reset and Body Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6; /* Light gray background */
+            margin: 0;
+            padding: 30px;
+            color: #333;
+        }
+
+        /* Container for Centering and Structure */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Heading Styles */
+        h3 {
+            text-align: center;
+            color: #007bff; /* Primary blue color */
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        /* Table Styles */
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .styled-table thead tr {
+            background-color: #009879; /* Header background color */
+            color: #ffffff;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+            border: 1px solid #dddddd; /* Light borders */
+        }
+        
+        /* Table Body Rows */
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+            transition: background-color 0.3s;
+        }
+
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3; /* Stripe even rows */
+        }
+
+        .styled-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+
+        .styled-table tbody tr:hover {
+            background-color: #e0f7fa; /* Highlight row on hover */
+        }
+        
+        /* Specific Column Widths for better layout */
+        .styled-table td:nth-child(1) { width: 5%; } /* Sno */
+        .styled-table td:nth-child(2) { width: 15%; } /* Name */
+        .styled-table td:nth-child(3) { width: 15%; } /* Email */
+        .styled-table td:nth-child(4) { width: 35%; } /* Content */
+        .styled-table td:nth-child(5) { width: 15%; } /* Date */
+        .styled-table td:nth-child(6) { width: 10%; } /* Action/Reply */
+
+
+        /* Action Button/Link Styling */
+        .action-link {
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #28a745; /* Green button */
+            padding: 6px 12px;
+            border-radius: 5px;
+            display: inline-block;
+            transition: background-color 0.3s, transform 0.2s;
+            font-weight: 600;
+        }
+
+        .action-link:hover {
+            background-color: #1e7e34;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+    <br><br><br>
+    <div class="container">
+        <h3 align="center">New Complaints (Pending Action) 📧</h3>
+        <table class="styled-table" align="center">
+            <thead>
+                <tr>
+                    <td>Sno</td>
+                    <td>Name</td>
+                    <td>Email</td>
+                    <td>Content</td>
+                    <td>Date</td>
+                    <td>Action</td>
+                 </tr>
+            </thead>
+            <tbody>
+                 {% for i in data %}
+                 <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.user.user_name}}</td>
+                    <td>{{i.user.user_email}}</td>
+                    <td>{{i.complaint_content}}</td>
+                    <td>{{i.date}}</td>
+                    <td><a href="{% url 'Admin:reply' i.id %}" class="action-link">Reply</a></td>
+                 </tr>
+                {% endfor %}
+            </tbody>
+        </table>   
+
+        <h3 align="center">Replied Complaints (History) ✅</h3>
+        <table class="styled-table" align="center">
+            <thead>
+                <tr>
+                    <td>Sno</td>
+                    <td>Name</td>
+                    <td>Email</td>
+                    <td>Content</td>
+                    <td>Date</td>
+                    <td>Reply</td>
+                 </tr>
+            </thead>
+            <tbody>
+                 {% for i in replied %}
+                 <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.user.user_name}}</td>
+                    <td>{{i.user.user_email}}</td>
+                    <td>{{i.complaint_content}}</td>
+                    <td>{{i.date}}</td>
+                    <td>{{i.complaint_reply}}</td>
+                 </tr>
+                {% endfor %}
+            </tbody>
+        </table>   
+    </div>
+</body>
+</html>
+
+{% endblock %}

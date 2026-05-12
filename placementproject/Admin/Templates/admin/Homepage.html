@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Placement Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Custom Sidebar Styling */
+        .sidebar {
+            background-color: #3730a3; /* Dark Indigo */
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .sidebar a {
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+        .sidebar a:hover {
+            background-color: #4f46e5; /* Slightly lighter indigo on hover */
+            transform: translateX(5px);
+        }
+        /* Main Button Styling */
+        .btn-primary {
+            background-color: #3b82f6; /* Blue-600 */
+            transition: background-color 0.2s ease;
+        }
+        .btn-primary:hover {
+            background-color: #2563eb; /* Blue-700 */
+        }
+        /* Card Hover Effect */
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen">
+        <div class="sidebar w-64 text-white flex flex-col fixed h-full z-10">
+            <div class="p-6 border-b border-indigo-500">
+                <h1 class="text-3xl font-bold tracking-wide">Admin Panel</h1>
+            </div>
+            <nav class="flex-1 overflow-y-auto">
+                <ul class="space-y-2 py-4 px-3">
+                    <li class="p-1">
+                        <a href="#" class="block text-white px-4 py-3 rounded-lg hover:bg-indigo-600 flex items-center font-medium">
+                            <i class="fas fa-tachometer-alt mr-3 text-lg"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="p-1">
+                        <a href="{% url 'Admin:jobpost' %}" class="block text-white px-4 py-3 rounded-lg hover:bg-indigo-600 flex items-center">
+                            <i class="fas fa-briefcase mr-3 text-lg"></i> Add Job Post
+                        </a>
+                    </li>
+                    <li class="p-1">
+                        <a href="{% url 'Logical:examtype' %}" class="block text-white px-4 py-3 rounded-lg hover:bg-indigo-600 flex items-center">
+                            <i class="fas fa-list-alt mr-3 text-lg"></i> Add Exam Type
+                        </a>
+                    </li>
+                    </li>
+                    <li class="p-1">
+                        <a href="{% url 'quiz_dashboard' %}" class="block text-white px-4 py-3 rounded-lg hover:bg-indigo-600 flex items-center">
+                            <i class="fas fa-tachometer-alt mr-3 text-lg"></i> Progress test question management
+                        </a>
+                    </li>
+                    <li class="p-1">
+                        <a href="{% url 'Logical:examinationdetails' %}" class="block text-white px-4 py-3 rounded-lg hover:bg-indigo-600 flex items-center">
+                            <i class="fas fa-question-circle mr-3 text-lg"></i> Aptitude Questions
+                        </a>
+                    </li>
+                    <li class="p-1">
+                        <a href="{% url 'Logical:AddpratQtn' %}" class="block text-white px-4 py-3 rounded-lg hover:bg-indigo-600 flex items-center">
+                            <i class="fas fa-pen-fancy mr-3 text-lg"></i> Practice Questions
+                        </a>
+                    </li>
+                    <li class="p-1">
+                        <a href="{% url 'Logical:completedexam' %}" class="block text-white px-4 py-3 rounded-lg hover:bg-indigo-600 flex items-center">
+                            <i class="fas fa-chalkboard-teacher mr-3 text-lg"></i> On Going Quiz
+                        </a>
+                    </li>
+                    <li class="p-1">
+                        <a href="{% url 'Interview:add_question' %}" class="block text-white px-4 py-3 rounded-lg hover:bg-indigo-600 flex items-center">
+                            <i class="fas fa-microphone mr-3 text-lg"></i> Mock Questions
+                        </a>
+                    </li>
+                    <li class="p-1">
+                        <a href="{% url 'Interview:addquestion' %}" class="block text-white px-4 py-3 rounded-lg hover:bg-indigo-600 flex items-center">
+                            <i class="fas fa-clipboard-question mr-3 text-lg"></i> Add Practice Interview
+                        </a>
+                    </li>
+                    <li class="p-1">
+                        <a href="{% url 'Interview:admin_dashboard' %}" class="block text-white px-4 py-3 rounded-lg hover:bg-indigo-600 flex items-center">
+                            <i class="fas fa-user-tie mr-3 text-lg"></i> Interview Dashboard
+                        </a>
+                    </li>
+                    <li class="p-1">
+                        <a href="{% url 'Interview:manage_questions' %}" class="block text-white px-4 py-3 rounded-lg hover:bg-indigo-600 flex items-center">
+                            <i class="fas fa-tasks mr-3 text-lg"></i> Manage Interview Question
+                        </a>
+                    </li>
+                     <li class="p-1">
+                        <a href="{% url 'Technical:add_question' %}" class="block text-white px-4 py-3 rounded-lg hover:bg-indigo-600 flex items-center">
+                            <i class="fas fa-tasks mr-3 text-lg"></i> Manage Coding
+                        </a>
+                    </li>
+                    <li class="p-1">
+                        <a href="{% url 'Admin:viewcomplaint' %}" class="block text-white px-4 py-3 rounded-lg hover:bg-indigo-600 flex items-center">
+                            <i class="fas fa-exclamation-circle mr-3 text-lg"></i> View Complaints
+                        </a>
+                    </li>
+                    <li class="p-1 pt-6">
+                        <a href="{% url 'Users:Logout' %}" class="block text-white bg-red-600 px-4 py-3 rounded-lg hover:bg-red-700 flex items-center font-semibold" onclick="return confirm('Are you sure you want to logout?')">
+                            <i class="fas fa-sign-out-alt mr-3 text-lg"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="flex-1 ml-64 p-8 overflow-auto">
+            <header class="flex justify-between items-center mb-10 pb-4 border-b border-gray-200">
+                <h2 class="text-4xl font-extrabold text-gray-800">🚀 Placement Portal Administration</h2>
+                </header>
+
+            <section id="overview" class="mb-12">
+                <h3 class="text-2xl font-bold mb-6 text-gray-700"><i class="fas fa-chart-line mr-2 text-indigo-500"></i> System Metrics</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="stat-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-500 transition duration-300">
+                        <h4 class="text-lg font-medium text-gray-600 mb-2">Total Job Posts</h4>
+                        <p class="text-4xl font-extrabold text-blue-600">25</p>
+                        <a href="{% url 'Admin:jobpost' %}" class="mt-3 inline-block text-blue-500 hover:text-blue-700 hover:underline text-sm font-medium">Manage Posts &rarr;</a>
+                    </div>
+                    <div class="stat-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-green-500 transition duration-300">
+                        <h4 class="text-lg font-medium text-gray-600 mb-2">Active Exam Types</h4>
+                        <p class="text-4xl font-extrabold text-green-600">10</p>
+                        <a href="{% url 'Logical:examtype' %}" class="mt-3 inline-block text-green-500 hover:text-green-700 hover:underline text-sm font-medium">Define Types &rarr;</a>
+                    </div>
+                    <div class="stat-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-yellow-500 transition duration-300">
+                        <h4 class="text-lg font-medium text-gray-600 mb-2">Total Questions</h4>
+                        <p class="text-4xl font-extrabold text-yellow-600">150</p>
+                        <a href="{% url 'Logical:examinationdetails' %}" class="mt-3 inline-block text-yellow-500 hover:text-yellow-700 hover:underline text-sm font-medium">Add/Edit Questions &rarr;</a>
+                    </div>
+                    <div class="stat-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-red-500 transition duration-300">
+                        <h4 class="text-lg font-medium text-gray-600 mb-2">Pending Complaints</h4>
+                        <p class="text-4xl font-extrabold text-red-600">5</p>
+                        <a href="{% url 'Admin:viewcomplaint' %}" class="mt-3 inline-block text-red-500 hover:text-red-700 hover:underline text-sm font-medium">Review Now &rarr;</a>
+                    </div>
+                </div>
+            </section>
+
+            ---
+
+            <section id="add-jobpost" class="mb-12 bg-white p-8 rounded-xl shadow-xl border-t-4 border-blue-500">
+                <h3 class="text-2xl font-bold mb-6 text-gray-700"><i class="fas fa-plus-circle mr-2 text-blue-500"></i> Add New Job Post</h3>
+                <form class="space-y-6">
+                    <div>
+                        <label for="job_title" class="block text-sm font-medium text-gray-700">Job Title</label>
+                        <input type="text" id="job_title" name="job_title" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Software Developer Intern">
+                    </div>
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-gray-700">Job Description</label>
+                        <textarea id="description" name="description" rows="3" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Enter detailed job description"></textarea>
+                    </div>
+                    <div>
+                        <label for="requirements" class="block text-sm font-medium text-gray-700">Requirements</label>
+                        <textarea id="requirements" name="requirements" rows="2" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Enter essential requirements (e.g., B.Tech, 70% aggregate)"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary text-white px-6 py-3 rounded-lg font-semibold shadow-md">
+                        <i class="fas fa-upload mr-2"></i> Submit Job Post
+                    </button>
+                </form>
+            </section>
+
+            ---
+
+            <section id="add-examtype" class="mb-12 bg-white p-8 rounded-xl shadow-xl border-t-4 border-green-500">
+                <h3 class="text-2xl font-bold mb-6 text-gray-700"><i class="fas fa-cog mr-2 text-green-500"></i> Configure Exam Type</h3>
+                <form class="space-y-6">
+                    <div>
+                        <label for="exam_type_name" class="block text-sm font-medium text-gray-700">Exam Type Name</label>
+                        <input type="text" id="exam_type_name" name="exam_type_name" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500" placeholder="e.g., Verbal Ability, Logical Reasoning">
+                    </div>
+                    <div>
+                        <label for="duration" class="block text-sm font-medium text-gray-700">Duration (minutes)</label>
+                        <input type="number" id="duration" name="duration" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500" placeholder="e.g., 45">
+                    </div>
+                    <button type="submit" class="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-green-700">
+                        <i class="fas fa-plus mr-2"></i> Add Exam Type
+                    </button>
+                </form>
+            </section>
+
+            ---
+
+            <section id="add-examquestions" class="mb-12 bg-white p-8 rounded-xl shadow-xl border-t-4 border-yellow-500">
+                <h3 class="text-2xl font-bold mb-6 text-gray-700"><i class="fas fa-book-reader mr-2 text-yellow-500"></i> Add Aptitude/Exam Questions</h3>
+                <form class="space-y-6">
+                    <div>
+                        <label for="select_exam_type" class="block text-sm font-medium text-gray-700">Select Exam Type</label>
+                        <select id="select_exam_type" name="select_exam_type" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500">
+                            <option>Technical</option>
+                            <option>Aptitude</option>
+                            <option>Logical Reasoning</option>
+                            <option>Verbal Ability</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="question_text" class="block text-sm font-medium text-gray-700">Question</label>
+                        <textarea id="question_text" name="question_text" rows="3" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500" placeholder="Enter the new question"></textarea>
+                    </div>
+                    <div>
+                        <label for="options" class="block text-sm font-medium text-gray-700">Options (A, B, C, D - separate by line break)</label>
+                        <textarea id="options" name="options" rows="4" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500" placeholder="Option A\nOption B\nOption C\nOption D"></textarea>
+                    </div>
+                    <div>
+                        <label for="correct_answer" class="block text-sm font-medium text-gray-700">Correct Answer</label>
+                        <input type="text" id="correct_answer" name="correct_answer" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500" placeholder="e.g., Option B">
+                    </div>
+                    <button type="submit" class="bg-yellow-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-yellow-700">
+                        <i class="fas fa-plus mr-2"></i> Add Question
+                    </button>
+                </form>
+            </section>
+
+            ---
+
+            <section id="view-complaints" class="mb-12 bg-white p-8 rounded-xl shadow-xl border-t-4 border-red-500">
+                <h3 class="text-2xl font-bold mb-6 text-gray-700"><i class="fas fa-bell mr-2 text-red-500"></i> View User Complaints</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-left bg-white border border-gray-200 rounded-lg">
+                        <thead>
+                            <tr class="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
+                                <th class="py-3 px-6 text-left">ID</th>
+                                <th class="py-3 px-6 text-left">User</th>
+                                <th class="py-3 px-6 text-left">Issue Summary</th>
+                                <th class="py-3 px-6 text-center">Status</th>
+                                <th class="py-3 px-6 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-600 text-sm font-light">
+                            <tr class="border-b border-gray-200 hover:bg-red-50">
+                                <td class="py-3 px-6 whitespace-nowrap">C001</td>
+                                <td class="py-3 px-6">John Doe</td>
+                                <td class="py-3 px-6">Issue with exam scoring</td>
+                                <td class="py-3 px-6 text-center">
+                                    <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs font-semibold">Pending</span>
+                                </td>
+                                <td class="py-3 px-6 text-center">
+                                    <a href="#" class="text-red-500 hover:text-red-700 font-medium">View/Resolve</a>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-200 hover:bg-green-50">
+                                <td class="py-3 px-6 whitespace-nowrap">C002</td>
+                                <td class="py-3 px-6">Jane Smith</td>
+                                <td class="py-3 px-6">Login issues</td>
+                                <td class="py-3 px-6 text-center">
+                                    <span class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs font-semibold">Resolved</span>
+                                </td>
+                                <td class="py-3 px-6 text-center">
+                                    <a href="#" class="text-green-500 hover:text-green-700 font-medium">View Details</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                    </table>
+                </div>
+                <a href="{% url 'Admin:viewcomplaint' %}" class="mt-6 inline-block text-red-600 hover:underline font-semibold">See All Complaints &rarr;</a>
+            </section>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+    </script>
+</body>
+</html>

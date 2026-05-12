@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Confirm Delete</title>
+  <style>
+    body { text-align: center; padding: 20px; }
+    button { padding: 10px 20px; margin: 5px; }
+  </style>
+</head>
+<body>
+  <h2>Confirm Deletion</h2>
+  <p>Are you sure you want to delete the question "{{ question.text }}"?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, Delete</button>
+    <a href="{% url 'edit_questions' quiz_type.id %}" class="back-btn">No, Cancel</a>
+  </form>
+</body>
+</html>

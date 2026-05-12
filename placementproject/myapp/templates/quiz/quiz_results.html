@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ quiz_type.name }} - Results</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+    body { 
+      background: linear-gradient(135deg, #f0f2f5 0%, #d3e0ea 100%);
+      display: flex; justify-content: center; align-items: center; 
+      min-height: 100vh; padding: 20px; color: #333; 
+    }
+    .container {
+      background: #ffffff; padding: 40px; border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      width: 100%; max-width: 700px; text-align: center;
+    }
+    .score-box {
+      background: linear-gradient(45deg, #27ae60, #2ecc71);
+      color: white; padding: 30px; border-radius: 15px;
+      margin-bottom: 30px; box-shadow: 0 10px 25px rgba(39, 174, 96, 0.3);
+    }
+    .score-number {
+      font-size: 4rem; font-weight: bold; margin-bottom: 10px;
+    }
+    .score-text { font-size: 1.5rem; }
+    h1 { color: #2c3e50; font-size: 2.5rem; margin-bottom: 20px; }
+    .results-list {
+      text-align: left; max-height: 400px; overflow-y: auto;
+      background: #f8f9fa; border-radius: 10px; padding: 20px;
+    }
+    .result-item {
+      padding: 15px; margin-bottom: 10px; border-radius: 8px;
+      border-left: 5px solid #ddd;
+    }
+    .result-item.correct { border-left-color: #27ae60; background: #d5f4e6; }
+    .result-item.incorrect { border-left-color: #e74c3c; background: #fadbd8; }
+    .question-text { font-weight: 600; margin-bottom: 5px; }
+    .answer-text { color: #666; }
+    .back-btn {
+      display: inline-block; padding: 15px 30px;
+      background: linear-gradient(45deg, #8e44ad, #6c3483);
+      color: white; text-decoration: none; border-radius: 10px;
+      font-size: 1.2rem; font-weight: 600; margin-top: 20px;
+      transition: all 0.3s;
+    }
+    .back-btn:hover {
+      transform: translateY(-2px); box-shadow: 0 5px 15px rgba(142, 68, 173, 0.4);
+    }
+    @media (max-width: 480px) {
+      .score-number { font-size: 3rem; }
+      .container { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>{{ quiz_type.name }} Results</h1>
+    
+    <!-- **BIG VISIBLE SCORE** -->
+    <div class="score-box">
+      <div class="score-number">{{ score }}</div>
+      <div class="score-text">out of {{ total_questions }}</div>
+      <div style="font-size: 1.2rem; margin-top: 10px;">
+        {{ score|floatformat:0 }}% Correct
+      </div>
+    </div>
+
+    <!-- **DETAILED RESULTS** -->
+    <div class="results-list">
+      {% for result in detailed_results %}
+        <div class="result-item {% if result.is_correct %}correct{% else %}incorrect{% endif %}">
+          <div class="question-text">Q{{ forloop.counter }}: {{ result.question.text }}</div>
+          <div class="answer-text">
+            {% if result.selected_answer %}
+              You chose: "{{ result.selected_answer.text }}"
+              {% if result.is_correct %}
+                <span style="color: #27ae60;"> ✅ Correct!</span>
+              {% else %}
+                <span style="color: #e74c3c;"> ❌ Incorrect</span>
+              {% endif %}
+            {% else %}
+              <span style="color: #e74c3c;">⏭️ Skipped</span>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <a href="{% url 'home' %}" class="back-btn">← Back to Dashboard</a>
+  </div>
+</body>
+</html>

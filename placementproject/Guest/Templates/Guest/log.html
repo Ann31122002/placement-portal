@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <form method="POST">
+            {% csrf_token %}
+            <table align="center" border="1">
+                <tr>
+                    <td>Username</td>
+                    <td><input type="text" name="txt_email" value=""></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><input type="password" name="txt_password" id="txt_password" /></td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" name="btn_submit" value="Login">
+                    <input type="reset" name="txt_cancel" value="Cancel"></td>
+                </tr>
+            </table>
+        </form>
+</body>
+</html>

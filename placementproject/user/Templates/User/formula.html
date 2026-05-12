@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essential Aptitude Formulas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #3498db, #2ecc71);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 30px 10px;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 95%;
+            max-width: 1000px;
+            padding: 30px;
+        }
+        .header {
+            background: linear-gradient(90deg, #e74c3c, #f39c12);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .section-heading {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            margin-top: 20px;
+            color: #34495e;
+        }
+        .formula-box {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        .formula-name {
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        .formula-expression {
+            font-family: monospace;
+            color: #e74c3c;
+            background: #ffffff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 5px;
+            overflow-x: auto; /* Handle long formulas on mobile */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="text-3xl font-bold">📚 Essential Aptitude Formulas Handbook</h1>
+            <p class="text-sm mt-1 opacity-90">Your quick reference guide for quantitative preparation.</p>
+        </div>
+
+        <div class="content grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <div>
+                <h2 class="section-heading text-xl font-semibold">Time, Speed, and Distance (TSD)</h2>
+                
+                <div class="formula-box">
+                    <div class="formula-name">1. Basic Speed</div>
+                    <div class="formula-expression">Speed = Distance / Time</div>
+                </div>
+                <div class="formula-box">
+                    <div class="formula-name">2. Unit Conversion</div>
+                    <div class="formula-expression">x km/hr = x * (5/18) m/s</div>
+                </div>
+                <div class="formula-box">
+                    <div class="formula-name">3. Average Speed</div>
+                    <div class="formula-expression">Avg. Speed = Total Distance / Total Time</div>
+                </div>
+                <div class="formula-box">
+                    <div class="formula-name">4. Relative Speed (Opposite Direction)</div>
+                    <div class="formula-expression">S_rel = S1 + S2</div>
+                </div>
+                
+                <h2 class="section-heading text-xl font-semibold">Time and Work</h2>
+                
+                <div class="formula-box">
+                    <div class="formula-name">5. Work Rate (Individual)</div>
+                    <div class="formula-expression">A's 1-Day Work = 1 / Days_taken_by_A</div>
+                </div>
+                <div class="formula-box">
+                    <div class="formula-name">6. Combined Work Rate</div>
+                    <div class="formula-expression">1/Days_Combined = 1/Days_A + 1/Days_B</div>
+                </div>
+                <div class="formula-box">
+                    <div class="formula-name">7. Men, Days, Work (Chain Rule)</div>
+                    <div class="formula-expression">(M1 * D1) / W1 = (M2 * D2) / W2</div>
+                </div>
+                
+                <h2 class="section-heading text-xl font-semibold">Averages & Mixtures</h2>
+                
+                <div class="formula-box">
+                    <div class="formula-name">8. Average (Mean)</div>
+                    <div class="formula-expression">Average = Sum of Observations / Number of Observations</div>
+                </div>
+                <div class="formula-box">
+                    <div class="formula-name">9. Average of N Natural Numbers</div>
+                    <div class="formula-expression">Avg = (N + 1) / 2</div>
+                </div>
+                <div class="formula-box">
+                    <div class="formula-name">10. Alligation Rule (Mixtures)</div>
+                    <div class="formula-expression">Ratio of Quantities = (C2 - Cm) / (Cm - C1)</div>
+                    <p class="text-xs text-gray-600 mt-1">C1, C2 = Cost of Quantity 1, 2; Cm = Mean Cost</p>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="section-heading text-xl font-semibold">Percentages, P&L, and Interest</h2>
+
+                <div class="formula-box">
+                    <div class="formula-name">11. Simple Interest (SI)</div>
+                    <div class="formula-expression">SI = (P * R * T) / 100</div>
+                </div>
+                <div class="formula-box">
+                    <div class="formula-name">12. Amount (Compound Interest)</div>
+                    <div class="formula-expression">A = P (1 + R/100)ᵀ</div>
+                </div>
+                <div class="formula-box">
+                    <div class="formula-name">13. Profit Percentage</div>
+                    <div class="formula-expression">P% = (Profit / CP) * 100</div>
+                </div>
+                <div class="formula-box">
+                    <div class="formula-name">14. Selling Price (SP - Profit)</div>
+                    <div class="formula-expression">SP = CP * (100 + P%) / 100</div>
+                </div>
+                <div class="formula-box">
+                    <div class="formula-name">15. Percentage Change</div>
+                    <div class="formula-expression">Change% = (|New - Old| / Old) * 100</div>
+                </div>
+
+                <h2 class="section-heading text-xl font-semibold">P&C and Probability</h2>
+                
+                <div class="formula-box">
+                    <div class="formula-name">16. Permutations (Arrangement)</div>
+                    <div class="formula-expression">ⁿPᵣ = n! / (n - r)!</div>
+                </div>
+                <div class="formula-box">
+                    <div class="formula-name">17. Combinations (Selection)</div>
+                    <div class="formula-expression">ⁿCᵣ = n! / [r! * (n - r)!]</div>
+                </div>
+                <div class="formula-box">
+                    <div class="formula-name">18. Basic Probability</div>
+                    <div class="formula-expression">P(E) = Favorable Outcomes / Total Outcomes</div>
+                </div>
+                
+                <h2 class="section-heading text-xl font-semibold">Ratios & Proportion</h2>
+                
+                <div class="formula-box">
+                    <div class="formula-name">19. Cross Product Rule</div>
+                    <div class="formula-expression">If a:b :: c:d, then a * d = b * c</div>
+                </div>
+                <div class="formula-box">
+                    <div class="formula-name">20. Mean Proportional</div>
+                    <div class="formula-expression">Mean Proportional of a and b = &Sqrt;(a * b)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-8 pt-4 border-t border-gray-200">
+            <p class="text-sm text-gray-500">Practice using these formulas daily to improve speed and accuracy!</p>
+        </div>
+    </div>
+</body>
+</html>

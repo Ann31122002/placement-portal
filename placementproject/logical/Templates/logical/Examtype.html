@@ -1,0 +1,160 @@
+{% extends 'Admin/JobPost.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Exam Types</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            padding: 20px;
+        }
+        .page-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff; /* White content background */
+            padding: 35px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #1e3a8a; /* Deep blue heading color */
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        /* Styling for the Form Table */
+        .form-table {
+            width: 100%;
+            margin-bottom: 40px;
+            border-collapse: separate;
+            border-spacing: 0 10px; /* Space between rows */
+        }
+        .form-table td {
+            padding: 10px 0;
+            vertical-align: middle;
+        }
+        .form-table tr:first-child td:first-child {
+            font-weight: 600;
+            color: #333;
+            width: 30%;
+        }
+        .form-table input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+        .form-table input[type="text"]:focus {
+            border-color: #44d2f6;
+            outline: none;
+            box-shadow: 0 0 5px rgba(68, 210, 246, 0.5);
+        }
+
+        /* Styling for the Data Table */
+        .data-table {
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 100%;
+        }
+        .data-table th {
+            background-color: #1e3a8a; /* Dark blue header */
+            color: white;
+            font-weight: 600;
+            text-align: center;
+            padding: 12px 10px;
+        }
+        .data-table td {
+            text-align: center;
+            padding: 10px;
+            vertical-align: middle;
+        }
+        .data-table tr:nth-child(even) {
+            background-color: #f7f7f7; /* Zebra striping for readability */
+        }
+        .data-table a {
+            color: #1e3a8a; /* Link color */
+            text-decoration: none;
+            margin: 0 5px;
+            transition: color 0.3s;
+        }
+        .data-table a:hover {
+            color: #f97316; /* Orange on hover */
+            text-decoration: underline;
+        }
+
+        /* Submit Button Styling */
+        .btn-submit {
+            background-color: #44d2f6 !important;
+            color: white !important;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: #27c1e5 !important;
+        }
+    </style>
+</head>
+<body><br><br><br>
+    <div class="page-container">
+        <h1>Manage Exam Types</h1>
+
+        <form method="post" action="">
+            {% csrf_token %}
+            <table class="form-table" align="center">
+                <tr>
+                    <td>Exam Type</td>
+                    <td>
+                        <input type="text" name="txt_exam" value="{{edit.examtype_name}}" placeholder="Enter Exam Type" class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" name="btnsubmit" class="btn btn-primary btn-submit" value="SUBMIT">
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <table class="table table-bordered data-table" align="center">
+            <thead>
+                <tr>
+                    <th>Sno</th>
+                    <th>Exam Type</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in data %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.examtype_name}}</td>
+                    <td>
+                        <a href="{% url 'Logical:deletedexamtype' i.id %}">Delete</a>
+                        |
+                        <a href="{% url 'Logical:editexamtype' i.id %}">Edit</a>
+                    </td>
+                </tr>
+               {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
+{% endblock %}

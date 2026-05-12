@@ -1,0 +1,2 @@
+User,User_Email,Quiz_Type,Question_Number,Question_Text,Selected_Answer,Correct_Answers,Is_Correct,Is_Incorrect,Response_Timestamp,Time_Taken_Question_Seconds,Total_Quiz_Time_Seconds
+guest_p37ra3ym,guest_p37ra3ym@quiz.com,logical,1,f,f,f,1,0,2025-10-26T04:12:06.713132+00:00,60,0

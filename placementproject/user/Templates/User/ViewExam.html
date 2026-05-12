@@ -1,0 +1,258 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table class="table table-bordered table-hover ">
+        <tr>
+            <th>Sno</th>
+            <th>Name</th>
+            <th>Mark</th>   
+            <th>Qustion No</th>
+            <th>Time</th>
+            <th>Date</th>
+            <th>Action</th>
+  
+        </tr>
+            {% for i in exam %}
+            <tr>
+             <td>{{forloop.counter}}</td>
+             <td>{{i.examination_name}}</td> 
+             <td>{{i.examination_mark}}</td>  
+             <td>{{i.examination_qno}}</td>    
+             <td>{{i.examination_time}}</td> 
+             <td>{{ i.examination_date }}</td>
+             <td>
+                {% if i.examstatus %}
+                You Completed This Examination | <a href="{% url 'Users:viewresult' i.id %}">View Result</a><br>
+                {% else %}
+                    {% if i.examination_status == 1 %}
+                        <a href="{% url 'Users:viewquestion' i.id %}">Enter To Exam</a>
+                    {% elif i.examination_status == 2 %}
+                        Exam Completed
+                    {% else %}
+                        Exam Not Started
+                    {% endif %}
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html> -->{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Examinations</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom styles from ViewPraticeQuestion.html for navbar and layout */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f3e8ff, #e6e6fa);
+        }
+        .navbar {
+            transition: background 0.3s ease;
+            background: linear-gradient(180deg, #6b46c1, #8e5af0);
+        }
+        .navbar a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(2px);
+            transition: all 0.3s ease;
+        }
+        /* Layout fix to push content down after the navbar */
+        .content-wrapper {
+            padding-top: 20px; /* Reduced padding from original ViewExam.html */
+        }
+
+        /* Original ViewExam.html styles (Adjusted to avoid conflicts with navbar) */
+        .exam-container {
+            background-color: #ffffff; /* White content area */
+            padding: 30px;
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            max-width: 1200px;
+            margin: auto;
+        }
+        h2.page-header {
+            color: #007bff; /* Primary blue color for header */
+            margin-bottom: 25px;
+            font-weight: 600;
+            border-bottom: 3px solid #007bff;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        .table-exam thead th {
+            background-color: #007bff; /* Blue header row */
+            color: white;
+            font-weight: 700;
+        }
+        .action-completed {
+            color: #28a745; 
+        }
+        .action-not-started {
+            color: #ffc107; 
+        }
+        .modal-header-warning {
+            background-color: #ffc107; 
+            color: #343a40; 
+            border-bottom: 0;
+        }
+    </style>
+
+    <script>
+        // Function to set modal content and show it
+        function prepareExamEntry(examName, examId) {
+            document.getElementById('examNamePlaceholder').innerText = examName;
+            var confirmUrl = "{% url 'Users:viewquestion' 0 %}".replace('/0', '/' + examId);
+            document.getElementById('confirmStartButton').href = confirmUrl;
+
+            var myModal = new bootstrap.Modal(document.getElementById('examConfirmationModal'));
+            myModal.show();
+        }
+        
+        // Mobile menu toggle (From ViewPraticeQuestion.html)
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        });
+    </script>
+</head>
+<body class="min-h-screen">
+    <div class="min-h-screen">
+        <div id="navbar" class="navbar bg-purple-900 text-white p-4 md:p-6 shadow-lg z-20">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <a href="{% url 'Users:Profile' %}" class="block py-2 px-4 bg-purple-600 rounded-lg text-lg hover:bg-purple-700">Profile</a>
+                    <h2 class="text-2xl md:text-3xl font-bold">Placement Portal</h2>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <nav class="hidden md:flex space-x-6">
+                        <a href="{% url 'Users:HomePage' %}" class="block py-2 px-4 rounded-lg text-lg hover:bg-purple-700">Home</a>
+                        <a href="{% url 'Users:Aptitude' %}" class="block py-2 px-4 rounded-lg text-lg hover:bg-purple-700">Aptitude</a>
+                        <a href="{% url 'Users:examnotification' %}" class="block py-2 px-4 rounded-lg text-lg hover:bg-purple-700">Notifications</a>
+                        <a href="{% url 'Users:ChangePassword' %}" class="block py-2 px-4 rounded-lg text-lg hover:bg-purple-700">Change Password</a>
+                    </nav>
+                    <a href="{% url 'Users:Logout' %}" class="block py-2 px-4 bg-purple-600 rounded-lg text-lg hover:bg-purple-700">Logout</a>
+                    <button id="menuToggle" class="md:hidden p-2 bg-purple-600 text-white rounded-lg shadow-md hover:bg-purple-700">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <nav id="mobileMenu" class="md:hidden mt-4 space-y-2 hidden">
+                <a href="{% url 'Users:Aptitude' %}" class="block py-2 px-4 bg-purple-800 rounded-lg text-lg hover:bg-purple-700">Aptitude</a>
+                <a href="{% url 'Users:ViewPraticeQuestion' %}" class="block py-2 px-4 bg-purple-800 rounded-lg text-lg hover:bg-purple-700">Practice Questions</a>
+                <a href="{% url 'Users:viewexam' %}" class="block py-2 px-4 bg-purple-800 rounded-lg text-lg hover:bg-purple-700">Assessments</a>
+                <a href="{% url 'Users:interviewtips' %}" class="block py-2 px-4 bg-purple-800 rounded-lg text-lg hover:bg-purple-700">Interview Tips</a>
+                <a href="{% url 'Users:resume' %}" class="block py-2 px-4 bg-purple-800 rounded-lg text-lg hover:bg-purple-700">Resume Builder</a>
+                <a href="{% url 'Users:Profile' %}" class="block py-2 px-4 bg-purple-800 rounded-lg text-lg hover:bg-purple-700">Profile</a>
+                <a href="{% url 'Users:ChangePassword' %}" class="block py-2 px-4 rounded-lg text-lg hover:bg-purple-700">Change Password</a>
+                <a href="{% url 'Users:Logout' %}" class="block py-2 px-4 bg-purple-800 rounded-lg text-lg hover:bg-purple-700">Logout</a>
+            </nav>
+        </div>
+
+        <div class="content-wrapper p-8 overflow-auto">
+            <div class="exam-container">
+                <h2 class="page-header">📚 Available Examinations</h2>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover table-exam align-middle">
+                        <thead>
+                            <tr>
+                                <th>Sno</th>
+                                <th>Name</th>
+                                <th>Mark</th>   
+                                <th>Q. No.</th>
+                                <th>Time (mins)</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in exam %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td class="text-start">{{i.examination_name}}</td> <td>{{i.examination_mark}}</td>  
+                                <td>{{i.examination_qno}}</td>    
+                                <td>{{i.examination_time}}</td> 
+                                <td>{{ i.examination_date|date:"M d, Y" }}</td> 
+                                <td class="action-cell">
+                                    {% if i.examstatus %}
+                                        <span class="action-completed">✅ You Completed This Examination</span>
+                                        <br>
+                                        <a href="{% url 'Users:viewresult' i.id %}" class="btn btn-sm btn-outline-success mt-1">View Result</a>
+                                    {% else %}
+                                        {% if i.examination_status == 1 %}
+                                            <a href="#" 
+                                               onclick="prepareExamEntry('{{ i.examination_name }}', '{{ i.id }}'); return false;"
+                                               class="btn btn-sm btn-primary">🚀 Enter To Exam</a>
+                                        {% elif i.examination_status == 2 %}
+                                            <span class="text-danger">❌ Exam Completed (Closed)</span>
+                                        {% else %}
+                                            <span class="action-not-started">⏳ Exam Not Started</span>
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="7" class="text-center p-4">
+                                    <p class="lead text-muted">No examinations are currently available.</p>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="examConfirmationModal" tabindex="-1" aria-labelledby="examConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header modal-header-warning">
+                    <h5 class="modal-title w-100 text-center" id="examConfirmationModalLabel">
+                        <i class="bi bi-exclamation-triangle-fill"></i> Confirm Examination Start
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center p-4">
+                    <p class="lead text-dark">
+                        You are about to start the examination: 
+                        <br>
+                        <strong id="examNamePlaceholder" class="text-primary fs-5"></strong>
+                    </p>
+                    <p class="text-danger fw-bold">
+                        ⚠️ WARNING: Once you click "Confirm Start," the examination timer begins immediately.
+                        You must complete the exam within the allotted time.
+                    </p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a id="confirmStartButton" href="#" class="btn btn-success fw-bold">Confirm Start & Begin Exam!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

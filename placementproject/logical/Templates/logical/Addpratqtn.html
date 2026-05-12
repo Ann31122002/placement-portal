@@ -1,0 +1,173 @@
+{% extends 'Admin/JobPost.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Practice Questions</title>
+    <style>
+        /* General Setup and Typography */
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f7f9fc; /* Soft, light background */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Form Container Styling */
+        .container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 700px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #334e68; /* Dark, professional color */
+            margin-bottom: 30px;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 10px;
+            font-size: 1.8em;
+        }
+
+        /* Table and Field Styling */
+        .question-form {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .question-form td {
+            padding: 12px 0;
+            vertical-align: top;
+            font-size: 1em;
+        }
+
+        .question-form td:first-child {
+            font-weight: 600;
+            color: #495057;
+            width: 25%; /* Space for labels */
+        }
+
+        /* Input and Textarea Styling */
+        input[type="text"],
+        textarea {
+            width: 100%; 
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            box-sizing: border-box; 
+            transition: border-color 0.3s, box-shadow 0.3s;
+            font-size: 1em;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Subtle focus ring */
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical; /* Allow vertical resizing for the question field */
+            min-height: 100px;
+        }
+
+        /* Button Group Styling */
+        .button-row {
+            text-align: center;
+            padding-top: 25px !important;
+        }
+
+        /* Button Base Style */
+        .btn {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 50px; /* Pill-shaped buttons */
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            margin: 0 10px;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+        }
+
+        /* Primary (Submit) Button */
+        .primary-btn {
+            background-color: #28a745; /* Green for submit */
+            color: white;
+            box-shadow: 0 4px 6px rgba(40, 167, 69, 0.3);
+        }
+
+        .primary-btn:hover {
+            background-color: #1e7e34;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(40, 167, 69, 0.4);
+        }
+
+        /* Secondary (Cancel/Reset) Button */
+        .secondary-btn {
+            background-color: #dc3545; /* Red for cancel/reset */
+            color: white;
+        }
+
+        .secondary-btn:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body><br><br><br><br><br><br>
+    <div class="container">
+        <h1>Add New Practice Question</h1>
+        <form id="form1" name="form1" method="POST" action="">
+            {% csrf_token %}
+            <table class="question-form">
+                <tr>
+                    <td><label for="txt_question">Question Content</label></td>
+                    <td>
+                        <textarea name="txt_question" id="txt_question" required></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="txt_option_a">Option A</label></td>
+                    <td><input type="text" name="txt_option_a" id="txt_option_a" required /></td>
+                </tr>
+                <tr>
+                    <td><label for="txt_option_b">Option B</label></td>
+                    <td><input type="text" name="txt_option_b" id="txt_option_b" required /></td>
+                </tr>
+                <tr>
+                    <td><label for="txt_option_c">Option C</label></td>
+                    <td><input type="text" name="txt_option_c" id="txt_option_c" required /></td>
+                </tr>
+                <tr>
+                    <td><label for="txt_option_d">Option D</label></td>
+                    <td><input type="text" name="txt_option_d" id="txt_option_d" required /></td>
+                </tr>
+                <tr>
+                    <td><label for="txt_correct">Correct Answer</label></td>
+                    <td>
+                        <input type="text" name="txt_correct" id="txt_correct" 
+                               placeholder="e.g., A, B, C, or D" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="button-row">
+                        <button type="submit" name="btn_submit" class="btn primary-btn">Submit Question</button>
+                        <button type="reset" name="txt_cancel" class="btn secondary-btn">Clear Form</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}

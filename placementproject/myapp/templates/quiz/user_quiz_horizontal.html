@@ -1,0 +1,504 @@
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ quiz_type.name|default:"Quiz" }} - Question {{ current_question_number|default:"1" }}</title>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --glow-color: var(--warning-color);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background-color: var(--card-background);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            padding: 10px 15px;
+            background-color: var(--card-background);
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .timer.blink {
+            color: var(--danger-color);
+            animation: blinker 1s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+
+        .question-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: var(--border-radius);
+        }
+
+        .question-nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .question-nav-item.current {
+            background-color: var(--primary-color);
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+        }
+
+        .question-nav-item.glow {
+            animation: bookmark-glow 1.5s infinite alternate;
+        }
+
+        @keyframes bookmark-glow {
+            from { box-shadow: 0 0 5px var(--glow-color); }
+            to { box-shadow: 0 0 15px var(--glow-color); }
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            background-color: #f1f1f1;
+            border-radius: var(--border-radius);
+        }
+
+        .question-counter {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .question-text {
+            font-size: 1.35rem;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-left: 5px solid var(--primary-color);
+            border-radius: var(--border-radius);
+        }
+
+        .answers-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: space-between;
+        }
+
+        .answer-option {
+            flex: 1 1 45%;
+            margin-bottom: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: var(--border-radius);
+            transition: all 0.2s;
+        }
+
+        .answer-option:hover {
+            background-color: #e9f5ff;
+            border-color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .answer-option input[type="radio"] {
+            display: none;
+        }
+
+        .answer-option label {
+            display: block;
+            padding: 15px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .answer-option input[type="radio"]:checked + label {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+        }
+
+        .bookmark-container {
+            margin-bottom: 20px;
+            display: inline-block;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .bookmark-container.glow .bookmark-label {
+            color: var(--glow-color);
+            font-weight: bold;
+            text-shadow: 0 0 5px var(--glow-color);
+        }
+
+        .bookmark-checkbox {
+            display: none;
+        }
+
+        .bookmark-label {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            user-select: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .bookmark-icon {
+            font-size: 1.5rem;
+            margin-left: 5px;
+            line-height: 1;
+            color: #ccc;
+        }
+
+        .bookmark-checkbox:checked + .bookmark-label .bookmark-icon {
+            color: var(--glow-color);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .nav-buttons .back-btn {
+            margin-left: auto;
+        }
+
+        button, .back-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        #prev-btn, #skip-btn {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        #next-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        #submit-btn {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        #save-next-btn {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .back-btn {
+            background-color: #495057;
+            color: white;
+        }
+
+        button:hover, .back-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        #prev-btn:hover { background-color: #5a6268; }
+        #skip-btn:hover { background-color: #5a6268; }
+        #next-btn:hover { background-color: #0056b3; }
+        #submit-btn:hover { background-color: #1e7e34; }
+        #save-next-btn:hover { background-color: #1e7e34; }
+        .back-btn:hover { background-color: #343a40; }
+
+        .time-info {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px 15px; }
+            .timer { font-size: 1.2rem; }
+            .quiz-header { flex-direction: column; align-items: flex-start; }
+            .nav-buttons { justify-content: space-between; }
+            .nav-buttons button, .nav-buttons .back-btn {
+                flex-grow: 1;
+                min-width: 45%;
+            }
+            .answer-option { flex: 1 1 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if quiz_type %}
+            <div id="timer" class="timer" aria-live="polite">Time Left: {{ time_left_value|default:time_per_question|default:"60" }}s</div>
+            <h1>{{ quiz_type.name|default:"Quiz" }}</h1>
+
+            <nav class="question-nav" aria-label="Question Navigation">
+                {% for i in "x"|ljust:total_questions %}
+                    {% with idx=forloop.counter0 %}
+                    <span data-question="{{ idx }}"
+                          class="question-nav-item {% if forloop.counter == current_question_number %}current{% endif %} {% if bookmarks|get_item:idx %}glow{% endif %}"
+                          role="button" aria-label="Go to question {{ forloop.counter }}">{{ forloop.counter }}</span>
+                    {% endwith %}
+                {% endfor %}
+            </nav>
+
+            <div class="quiz-header">
+                <div class="question-counter">Question <strong>{{ current_question_number|default:"1" }}</strong> of {{ total_questions|default:"1" }}</div>
+                <div class="bookmark-container" id="bookmark-container">
+                    <input type="checkbox" id="bookmark-checkbox" name="bookmark" class="bookmark-checkbox" aria-label="Bookmark this question" {% if is_bookmarked %}checked{% endif %}>
+                    <label for="bookmark-checkbox" class="bookmark-label">Bookmark <span class="bookmark-icon">★</span></label>
+                </div>
+            </div>
+
+            <div class="question-text">{{ question.text|default:"No question text available" }}</div>
+
+            <form method="post" id="quiz-form">
+                {% csrf_token %}
+                <input type="hidden" name="action" id="action" value="">
+                <input type="hidden" name="target_question" id="target_question" value="">
+                <input type="hidden" name="time_left" id="time_left" value="{{ time_left_value|default:time_per_question|default:'60'|stringformat:'s' }}">
+
+                <div class="answers-container">
+                    {% for answer in answers %}
+                        <div class="answer-option">
+                            <input type="radio" name="answer" value="{{ answer.id }}" id="answer{{ answer.id }}"
+                                   {% if user_answers|get_item:question.id == answer.id|stringformat:"s" %}checked{% endif %}>
+                            <label for="answer{{ answer.id }}">{{ answer.text|default:"No answer text" }}</label>
+                        </div>
+                    {% empty %}
+                        <p>No answer options available for this question.</p>
+                    {% endfor %}
+                </div>
+
+                <div class="nav-buttons">
+    <button type="button" id="prev-btn" {% if current_question_number <= 1 %}disabled{% endif %}>Previous</button>
+    <button type="button" id="skip-btn">Skip</button>
+    <button type="button" id="save-next-btn">Save & Next</button>
+    <button type="button" id="next-btn">Next</button>
+    <button type="button" id="submit-btn">Submit Quiz</button>
+    <a href="{% url 'home' %}" class="back-btn">Back to Dashboard</a>
+</div>
+            </form>
+
+            <p class="time-info">Time per question: {{ time_per_question|default:"60" }} seconds</p>
+        {% else %}
+            <p>Please select a quiz to start.</p>
+        {% endif %}
+    </div>
+
+    <!-- Pass Django variables to JavaScript -->
+    {{ time_per_question|json_script:"time-per-question" }}
+    {{ current_question_number|json_script:"current-question-number" }}
+    {{ total_questions|json_script:"total-questions" }}
+    {{ is_bookmarked|json_script:"is-bookmarked" }}
+    {{ bookmarks|json_script:"bookmarks" }}
+    {{ user_answers|json_script:"user-answers" }}
+
+    <script>
+        // Get variables
+        const timePerQuestion = parseInt(document.getElementById('time-per-question')?.textContent) || 60;
+        const currentQuestionIndex = (parseInt(document.getElementById('current-question-number')?.textContent) || 1) - 1;
+        const totalQuestions = parseInt(document.getElementById('total-questions')?.textContent) || 1;
+        
+        const bookmarksElement = document.getElementById('bookmarks');
+        const userAnswersElement = document.getElementById('user-answers');
+        let bookmarks = bookmarksElement ? JSON.parse(bookmarksElement.textContent) : {};
+        let userAnswers = userAnswersElement ? JSON.parse(userAnswersElement.textContent) : {};
+
+        // Elements
+        const quizForm = document.getElementById("quiz-form");
+        const timerElement = document.getElementById("timer");
+        const bookmarkCheckbox = document.getElementById("bookmark-checkbox");
+        const bookmarkContainer = document.getElementById("bookmark-container");
+        const prevButton = document.getElementById("prev-btn");
+        const skipButton = document.getElementById("skip-btn");
+        const nextButton = document.getElementById("next-btn");
+        const saveNextButton = document.getElementById("save-next-btn");
+        const submitButton = document.getElementById("submit-btn");
+        const navItems = document.querySelectorAll(".question-nav-item");
+
+        let timeLeft = parseInt(document.getElementById("time_left").value) || timePerQuestion;
+
+        // TIMER
+        function startTimer() {
+            if (!timerElement) return;
+            clearInterval(window.timer);
+            timerElement.innerHTML = `Time Left: ${timeLeft}s`;
+            
+            window.timer = setInterval(() => {
+                timeLeft--;
+                timerElement.innerHTML = `Time Left: ${timeLeft}s`;
+                document.getElementById("time_left").value = timeLeft;
+                
+                if (timeLeft <= 10) timerElement.classList.add("blink");
+                else timerElement.classList.remove("blink");
+
+                if (timeLeft <= 0) {
+                    clearInterval(window.timer);
+                    saveState();
+                    document.getElementById("action").value = "next";
+                    quizForm.submit();
+                }
+            }, 1000);
+        }
+
+        // SAVE STATE
+        function saveState() {
+            const selected = document.querySelector('input[name="answer"]:checked');
+            if (selected) {
+                userAnswers[currentQuestionIndex] = selected.value;
+            }
+            if (bookmarkCheckbox) {
+                bookmarks[currentQuestionIndex] = bookmarkCheckbox.checked;
+            }
+        }
+
+       // BUTTON EVENTS - FIXED!
+prevButton.addEventListener("click", () => {
+    if (currentQuestionIndex > 0) {
+        document.getElementById("action").value = "previous";
+        quizForm.submit();
+    }
+});
+
+skipButton.addEventListener("click", () => {
+    if (confirm("Skip this question?")) {
+        document.getElementById("action").value = "skip";
+        quizForm.submit();
+    }
+});
+
+nextButton.addEventListener("click", () => {
+    document.getElementById("action").value = "next";
+    quizForm.submit();
+});
+
+saveNextButton.addEventListener("click", () => {
+    document.getElementById("action").value = "save_and_next";
+    quizForm.submit();
+});
+
+submitButton.addEventListener("click", () => {
+    if (confirm("Submit quiz? This ends the session!")) {
+        document.getElementById("action").value = "submit";
+        quizForm.submit();
+    }
+});
+        // NAVIGATION DOTS
+        navItems.forEach(item => {
+            item.addEventListener("click", () => {
+                const target = parseInt(item.dataset.question);
+                if (target !== currentQuestionIndex) {
+                    saveState();
+                    document.getElementById("action").value = "nav";
+                    document.getElementById("target_question").value = target;
+                    quizForm.submit();
+                }
+            });
+        });
+
+        // BOOKMARK
+        if (bookmarkCheckbox) {
+            bookmarkCheckbox.addEventListener("change", () => {
+                const currentNavItem = document.querySelector(`.question-nav-item[data-question="${currentQuestionIndex}"]`);
+                if (bookmarkCheckbox.checked) {
+                    bookmarkContainer.classList.add("glow");
+                    if (currentNavItem) currentNavItem.classList.add("glow");
+                } else {
+                    bookmarkContainer.classList.remove("glow");
+                    if (currentNavItem) currentNavItem.classList.remove("glow");
+                }
+                saveState();
+            });
+        }
+
+        // KEYBOARD
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowLeft" && currentQuestionIndex > 0) {
+                prevButton.click();
+            } else if (e.key === "ArrowRight" && currentQuestionIndex < totalQuestions - 1) {
+                nextButton.click();
+            } else if (e.key === "s" || e.key === "S") {
+                skipButton.click();
+            }
+        });
+
+        // FORM SUBMIT
+        quizForm.addEventListener("submit", () => {
+            saveState();
+        });
+
+        // INIT
+        if (bookmarkCheckbox && bookmarkCheckbox.checked) {
+            bookmarkContainer.classList.add("glow");
+        }
+        startTimer();
+    </script>
+</body>
+</html>

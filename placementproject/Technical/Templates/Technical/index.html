@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Online Coding Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root{
+      --bg:#0f1724;
+      --muted:#9aa8bf;
+      --accent:#6ee7b7;
+      --primary:#60a5fa;
+      --accent-2:#7c3aed;
+      --glass: rgba(255,255,255,0.03);
+      --white:#e6eef8;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%; margin:0; font-family:Inter, "Segoe UI", Roboto, system-ui, -apple-system; background: linear-gradient(180deg,#071025 0%, #071325 60%); color:var(--white); -webkit-font-smoothing:antialiased;}
+    .app{
+      display:flex;
+      gap:20px;
+      padding:24px;
+      height:100vh;
+    }
+    .sidebar{
+      width:320px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px;
+      padding:16px;
+      border:1px solid rgba(255,255,255,0.04);
+      overflow:auto;
+      box-shadow:0 8px 30px rgba(2,6,23,0.6);
+    }
+    .header {display:flex; gap:12px; align-items:center; margin-bottom:10px;}
+    .header h1{font-size:16px;margin:0;color:var(--white)}
+    .header .sub{font-size:13px;color:var(--muted)}
+    .controls{display:flex;gap:8px;margin-bottom:12px;align-items:center}
+    .search{flex:1;background:var(--glass);border:1px solid rgba(255,255,255,0.02);padding:8px;border-radius:8px;color:var(--white)}
+    .filter-toggle{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px;border-radius:8px;color:var(--muted);cursor:pointer}
+    .group{
+      margin-top:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      border-radius:8px;
+      padding:8px;
+    }
+    .group-header{display:flex;justify-content:space-between;align-items:center;padding:6px 8px}
+    .group-title{font-weight:600;color:var(--white)}
+    .group-count{font-size:12px;color:var(--muted); background: rgba(255,255,255,0.02); padding:4px 8px;border-radius:999px}
+    .question-item{
+      margin:8px;
+      padding:10px;
+      border-radius:8px;
+      background:transparent;
+      cursor:pointer;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      border:1px solid transparent;
+      transition:all .12s ease;
+    }
+    .question-item:hover{transform:translateY(-3px); box-shadow: 0 6px 18px rgba(2,6,23,0.6); border-color: rgba(255,255,255,0.03)}
+    .question-item.active{background:linear-gradient(90deg, rgba(96,165,250,0.12), rgba(124,58,237,0.06)); border-left:4px solid var(--primary)}
+    .qid{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.03);display:flex;align-items:center;justify-content:center;color:var(--white);font-weight:700}
+    .qmeta{flex:1}
+    .qtitle{font-weight:600;font-size:14px}
+    .qsub{font-size:12px;color:var(--muted); margin-top:4px}
+    .badge-e{background:rgba(34,197,94,0.12); color:#a7f3d0; padding:4px 8px;border-radius:999px;font-size:12px}
+    .badge-m{background:rgba(250,204,21,0.06); color:#fde68a; padding:4px 8px;border-radius:999px;font-size:12px}
+    .badge-h{background:rgba(239,68,68,0.06); color:#fecaca; padding:4px 8px;border-radius:999px;font-size:12px}
+    .main{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      overflow:hidden;
+    }
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px;
+      padding:16px;
+      border:1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 12px 36px rgba(2,6,23,0.6);
+    }
+    .title-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .question-title{font-size:18px;font-weight:700}
+    .controls-right{display:flex;gap:8px;align-items:center}
+    select, button.primary, button.ghost {padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--white);cursor:pointer}
+    button.primary{background:linear-gradient(90deg,var(--primary),var(--accent-2));border:none; color:#051025;font-weight:700}
+    button.ghost{background:transparent; color:var(--muted)}
+    .small{font-size:13px;color:var(--muted)}
+    .desc-and-tests{display:flex;gap:12px;margin-top:12px;align-items:flex-start}
+    .description{flex:1; min-width:320px}
+    .test-box{width:420px; max-height:320px; overflow:auto; border-radius:8px; padding:8px; background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.02)}
+    table{width:100%; border-collapse:collapse; font-size:13px; color:var(--white)}
+    th,td{padding:8px; border-bottom:1px dashed rgba(255,255,255,0.03); text-align:left}
+    th{font-size:13px;color:var(--muted); font-weight:600}
+    .muted{color:var(--muted)}
+    textarea#code-editor{
+      width:100%;
+      height:340px;
+      margin-top:12px;
+      background: #01040a;
+      border:1px solid rgba(255,255,255,0.03);
+      color:var(--white);
+      padding:12px;
+      border-radius:8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+      font-size:13px;
+      resize:vertical;
+    }
+    .action-row{display:flex;gap:8px; align-items:center; margin-top:12px; flex-wrap:wrap}
+    .status{font-weight:600;color:var(--accent); margin-left:6px}
+    .hint{color:var(--muted); font-size:13px}
+
+    /* responsive */
+    @media (max-width:980px){
+      .sidebar{width:260px}
+      .test-box{width:320px}
+    }
+    @media (max-width:760px){
+      .app{flex-direction:column;padding:12px}
+      .sidebar{width:100%; height:260px; order:2; overflow:auto}
+      .main{order:1}
+      .desc-and-tests{flex-direction:column}
+      .test-box{width:100%}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar card" aria-label="Questions sidebar">
+      <div class="header">
+        <div>
+          <h1>Online Coding Test</h1>
+          <div class="sub">Practice • Evaluate • Improve</div>
+        </div>
+      </div>
+      <div class="controls">
+        <input id="search" class="search" placeholder="Search questions..." />
+        <button id="collapseAll" class="filter-toggle" title="Collapse/Expand groups">⇄</button>
+      </div>
+      <div id="groupsContainer"></div>
+    </aside>
+    <main class="main">
+      <div class="topbar">
+        <div class="card" style="flex:1">
+          <div class="title-row">
+            <div>
+              <div class="question-title" id="questionTitle">Select a question</div>
+              <div class="small" id="questionDiff">Choose a question from the left</div>
+            </div>
+            <div class="controls-right">
+              <label class="small muted" for="languageSelect">Language</label>
+              <select id="languageSelect" title="Select language">
+                <option value="javascript">JavaScript</option>
+                <option value="python">Python</option>
+                <option value="cpp">C++</option>
+                <option value="java">Java</option>
+                <option value="c">C</option>
+              </select>
+            </div>
+          </div>
+          <div class="desc-and-tests">
+            <div class="description">
+              <div id="questionDescription" class="muted">Pick a question to see description and test cases here.</div>
+            </div>
+            <div class="test-box" id="testBox" aria-live="polite">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                <div style="font-weight:700">Test Cases</div>
+                <button id="toggleTests" class="ghost">Hide</button>
+              </div>
+              <div id="testTableWrap">
+                <div class="muted">No question selected.</div>
+              </div>
+            </div>
+          </div>
+          <textarea id="code-editor" placeholder="// Write your solution here..."></textarea>
+          <div class="action-row">
+            <button id="submitBtn" class="primary">Submit</button>
+            <button id="clearBtn" class="ghost">Clear</button>
+            <div class="hint">Auto-saves per question • <span class="status" id="saveStatus">Saved</span></div>
+          </div>
+          <div style="margin-top:8px"><span id="submissionStatus" class="muted"></span></div>
+        </div>
+        <div style="width:320px">
+          <div class="card">
+            <div style="font-weight:700;margin-bottom:8px">Quick Tips</div>
+            <ul class="muted" style="padding-left:18px; line-height:1.6">
+              <li>View multiple test cases to validate edge conditions.</li>
+              <li>Use the language selector before submitting.</li>
+              <li>Copy or download your code for offline editing.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script>
+   let questions = [];
+
+   fetch('http://127.0.0.1:8000/api/questions/')
+  .then(res => res.json())
+  .then(data => {
+      questions = data;
+      renderSidebar();
+      if (questions.length > 0) loadQuestion(questions[0].id);
+  })
+  .catch(err => console.error('Error loading questions:', err));
+
+    let expandedGroups = { Easy:true, Medium:true, Hard:true };
+    let selectedQuestionId = null;
+    let saveTimer = null;
+    let displayNumberById = {}; 
+    const byDifficulty = (d) => questions.filter(q => q.difficulty === d);
+    const el = (id) => document.getElementById(id);
+    const lskey = (id) => `codetest:question:${id}:code`;
+    function renderSidebar(filterText=""){
+      const container = el('groupsContainer');
+      container.innerHTML = "";
+      displayNumberById = {}; 
+      const ordered = ["Easy","Medium","Hard"].flatMap(diff =>
+        byDifficulty(diff).filter(q => q.title.toLowerCase().includes(filterText.toLowerCase()))
+      );
+      ordered.forEach((q, idx) => displayNumberById[q.id] = idx + 1);
+      ["Easy","Medium","Hard"].forEach(diff => {
+        const groupQuestions = byDifficulty(diff).filter(q => q.title.toLowerCase().includes(filterText.toLowerCase()));
+        const group = document.createElement('div'); group.className = 'group';
+        const header = document.createElement('div'); header.className = 'group-header';
+        const left = document.createElement('div'); left.className = 'group-title';
+        left.textContent = diff;
+        const right = document.createElement('div'); right.className = 'group-count';
+        right.textContent = `${groupQuestions.length} questions`;
+        header.appendChild(left); header.appendChild(right);
+        group.appendChild(header);
+        header.onclick = () => {
+          expandedGroups[diff] = !expandedGroups[diff];
+          renderSidebar(el('search').value);
+        };
+        if(expandedGroups[diff]){
+          const listWrap = document.createElement('div');
+          groupQuestions.forEach(q => {
+            const item = document.createElement('div');
+            item.className = 'question-item' + (q.id === selectedQuestionId ? ' active' : '');
+            item.onclick = () => loadQuestion(q.id);
+            const qid = document.createElement('div'); qid.className='qid';
+            qid.textContent = displayNumberById[q.id] ?? q.id;
+            const meta = document.createElement('div'); meta.className='qmeta';
+            const title = document.createElement('div'); title.className='qtitle'; title.textContent = `${displayNumberById[q.id] ? displayNumberById[q.id] + '. ' : ''}${q.title}`;
+            const sub = document.createElement('div'); sub.className='qsub'; sub.textContent = q.description.slice(0,80) + (q.description.length>80? '...':'');
+            const badge = document.createElement('div'); badge.style.marginLeft='8px';
+            const bspan = document.createElement('span');
+            bspan.className = q.difficulty === 'Easy' ? 'badge-e' : q.difficulty === 'Medium' ? 'badge-m' : 'badge-h';
+            bspan.textContent = q.difficulty;
+            badge.appendChild(bspan);
+            meta.appendChild(title); meta.appendChild(sub);
+            item.appendChild(qid); item.appendChild(meta); item.appendChild(badge);
+            listWrap.appendChild(item);
+          });
+          group.appendChild(listWrap);
+        } else {
+          const collapsedNote = document.createElement('div');
+          collapsedNote.style.fontSize='13px';
+          collapsedNote.style.color='var(--muted)';
+          collapsedNote.style.padding='8px';
+          collapsedNote.textContent = 'Collapsed — click header to expand';
+          group.appendChild(collapsedNote);
+        }
+        container.appendChild(group);
+      });
+    }
+    function loadQuestion(id){
+      if(selectedQuestionId){ saveCurrentCode(); }
+      selectedQuestionId = id;
+      const q = questions.find(x => x.id===id);
+      if(!q) return;
+      const displayNum = displayNumberById[q.id] ?? '';
+      el('questionTitle').textContent = `${displayNum ? displayNum + '. ' : ''}${q.title}`;
+      el('questionDiff').textContent = `${q.difficulty} • ID #${q.id}`;
+      el('questionDescription').innerHTML = `<div style="font-weight:600;margin-bottom:8px">${q.title}</div><div class="muted">${q.description}</div>`;
+      renderTestTable(q.testCases);
+      const saved = localStorage.getItem(lskey(id));
+      el('code-editor').value = saved || `// ${q.title}\n// Write your ${el('languageSelect').value} solution here\n`;
+      updateSaveStatus('Saved');
+      renderSidebar(el('search').value);
+    }
+    function renderTestTable(testCases){
+      const wrap = el('testTableWrap');
+      if(!testCases || testCases.length===0){
+        wrap.innerHTML = `<div class="muted">No test cases provided for this question.</div>`;
+        return;
+      }
+      let html = `<table><thead><tr><th>#</th><th>Input</th><th>Expected Output</th></tr></thead><tbody>`;
+      testCases.forEach((t,i) => {
+        html += `<tr><td>${i+1}</td><td><code>${escapeHtml(t.input)}</code></td><td><code>${escapeHtml(t.expected)}</code></td></tr>`;
+      });
+      html += `</tbody></table>`;
+      wrap.innerHTML = html;
+    }
+    function escapeHtml(s){ return (s+'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+
+    const codeEditor = el('code-editor');
+    codeEditor.addEventListener('input', () => {
+      updateSaveStatus('Saving...');
+      if(saveTimer) clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => { saveCurrentCode(); updateSaveStatus('Saved'); }, 700);
+    });
+    function saveCurrentCode(){
+      if(!selectedQuestionId) return;
+      localStorage.setItem(lskey(selectedQuestionId), codeEditor.value);
+    }
+    function updateSaveStatus(text){ el('saveStatus').textContent = text; }
+    el('clearBtn').addEventListener('click', () => {
+      if(!selectedQuestionId){ alert('Select a question first'); return; }
+      if(!confirm('Clear code for this question?')) return;
+      codeEditor.value = '';
+      saveCurrentCode();
+      updateSaveStatus('Saved');
+    });
+    el('submitBtn').addEventListener('click', () => {
+      if(!selectedQuestionId){ alert('Select a question first'); return; }
+      const payload = {
+        question_id: selectedQuestionId,
+        language: el('languageSelect').value,
+        code: codeEditor.value
+      };
+      el('submissionStatus').textContent = 'Submitting...';
+      fetch('http://localhost:8000/api/submit/', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(payload)
+      }).then(async res => {
+        const data = await res.json().catch(()=>null);
+        if(res.ok){
+          el('submissionStatus').textContent = data?.message || 'Submission received.';
+        } else {
+          el('submissionStatus').textContent = data?.message || `Submission failed (${res.status}).`;
+        }
+      }).catch(err=>{
+        console.error(err);
+        el('submissionStatus').textContent = 'Submission failed (network).';
+      });
+    });
+    el('search').addEventListener('input', (e) => {
+      renderSidebar(e.target.value);
+    });
+    el('collapseAll').addEventListener('click', () => {
+      const anyExpanded = expandedGroups.Easy || expandedGroups.Medium || expandedGroups.Hard;
+      expandedGroups = { Easy: !anyExpanded, Medium: !anyExpanded, Hard: !anyExpanded };
+      renderSidebar(el('search').value);
+    });
+    let testsVisible = true;
+    el('toggleTests').addEventListener('click', ()=>{
+      testsVisible = !testsVisible;
+      el('testTableWrap').style.display = testsVisible ? 'block' : 'none';
+      el('toggleTests').textContent = testsVisible ? 'Hide' : 'Show';
+    });
+    renderSidebar();
+    const firstOrdered = ["Easy","Medium","Hard"].flatMap(diff => byDifficulty(diff)).filter(Boolean);
+    if(firstOrdered.length) loadQuestion(firstOrdered[0].id);
+    window.addEventListener('beforeunload', (e) => {
+      saveCurrentCode();
+    });
+  </script>
+</body>
+</html>

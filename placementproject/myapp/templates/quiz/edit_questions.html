@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ quiz_type.name }} - Edit Questions</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #e6f0fa 0%, #c0d8e7 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      color: #2c3e50;
+    }
+    .container {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 800px;
+      text-align: center;
+      animation: fadeIn 0.5s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    h1 {
+      font-size: 2.2rem;
+      color: #34495e;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+    .question-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    .question-table th, .question-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ecf0f1;
+    }
+    .question-table th {
+      background: #ecf0f1;
+      color: #2c3e50;
+      font-weight: 600;
+    }
+    .question-table td {
+      color: #34495e;
+    }
+    .action-btn {
+      padding: 8px 15px;
+      background: linear-gradient(45deg, #3498db 0%, #2980b9 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .action-btn:hover {
+      background: linear-gradient(45deg, #2980b9 0%, #1a5276 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+    }
+    .delete-btn {
+      background: linear-gradient(45deg, #e74c3c 0%, #c0392b 100%);
+    }
+    .delete-btn:hover {
+      background: linear-gradient(45deg, #c0392b 0%, #a93226 100%);
+    }
+    .back-btn {
+      padding: 10px 20px;
+      background: linear-gradient(45deg, #8e44ad 0%, #6c3483 100%);
+      color: #ffffff;
+      border-radius: 8px;
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+    }
+    .back-btn:hover {
+      background: linear-gradient(45deg, #6c3483 0%, #5b2c6f 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(142, 68, 173, 0.4);
+    }
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+      .question-table th, .question-table td {
+        padding: 8px;
+        font-size: 0.9rem;
+      }
+      .action-btn, .delete-btn {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>{{ quiz_type.name }} - Edit Questions</h1>
+    {% if questions %}
+      <table class="question-table">
+        <thead>
+          <tr>
+            <th>Question Number</th>
+            <th>Text</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for question in questions %}
+            <tr>
+              <td>{{ question.number }}</td>
+              <td>{{ question.text }}</td>
+              <td><a href="{% url 'edit_question' quiz_type.id question.id %}" class="action-btn">Edit</a></td>
+              <td>
+                <form method="post" action="{% url 'delete_question' quiz_type.id question.id %}" style="display:inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="delete-btn" aria-label="Delete question {{ question.id }}" onclick="return confirm('Are you sure you want to delete this question?');">Delete</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No questions available for this quiz.</p>
+    {% endif %}
+    <a href="{% url 'quiz_dashboard' %}" class="back-btn" aria-label="Back to dashboard">Back to Dashboard</a>
+  </div>
+</body>
+</html>

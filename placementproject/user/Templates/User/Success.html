@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examination Completed</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            overflow: hidden;
+            color: white;
+        }
+        
+        .completion-container {
+            text-align: center;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            max-width: 90%;
+            width: 550px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeIn 1s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h1 {
+            color: #ffffff;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #FF512F, #F09819);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            border-radius: 0;
+            opacity: 0;
+        }
+        
+        .redirect-message {
+            margin-top: 2rem;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.8rem;
+            border-radius: 50px;
+            display: inline-block;
+        }
+        
+        .countdown {
+            font-weight: bold;
+            color: #FFD700;
+            font-size: 1.2rem;
+        }
+        
+        .celebration-emoji {
+            font-size: 3rem;
+            margin: 0 0 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @media (max-width: 600px) {
+            .completion-container {
+                padding: 1.8rem;
+                width: 85%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
+            
+            .celebration-emoji {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="completion-container">
+        <div class="celebration-emoji">🎉</div>
+        <h1>Examination Completed!</h1>
+        <p>Congratulations! You have successfully completed your examination. Your responses have been recorded.</p>
+        <div class="redirect-message">
+            Redirecting shortly in <span class="countdown" id="countdown">5</span> seconds
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+    </script>
+
+    <script>
+        // Confetti animation
+        document.addEventListener('DOMContentLoaded', function() {
+            createConfetti();
+            startCountdown();
+            
+            // Example button action - replace with your actual functionality
+            document.getElementById('viewResults').addEventListener('click', function() {
+                redirectToResults();
+            });
+        });
+
+        function redirectToResults() {
+            // Replace 'results.html' with your actual results page URL
+            window.location.href = "{% url 'Users:Aptitude' %}";
+
+        }
+
+        function startCountdown() {
+            let seconds = 5;
+            const countdownElement = document.getElementById('countdown');
+            
+            const interval = setInterval(() => {
+                seconds--;
+                countdownElement.textContent = seconds;
+                
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    redirectToResults();
+                }
+            }, 1000);
+        }
+
+        function createConfetti() {
+            const confettiCount = 200;
+            const container = document.body;
+            
+            // Confetti colors - more vibrant colors
+            const colors = [
+                '#FF3366', '#36FF33', '#3366FF', '#FF33FF', 
+                '#33FFFF', '#FFFF33', '#FF6633', '#33FF66',
+                '#6633FF', '#FF3399', '#33FFCC', '#FFCC33',
+                '#FF99FF', '#99FFFF', '#FFFF99', '#FF6666'
+            ];
+            
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                
+                // Random properties
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const size = Math.random() * 15 + 5;
+                
+                // More variety in shapes
+                const shapeTypes = ['50%', '0', '0 50% 50% 0', '50% 0 0 50%'];
+                const shape = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
+                
+                // Set styles
+                confetti.style.backgroundColor = color;
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                confetti.style.borderRadius = shape;
+                confetti.style.left = `${Math.random() * 100}vw`;
+                confetti.style.top = `-${size}px`;
+                confetti.style.opacity = '1';
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                
+                // Add to container
+                container.appendChild(confetti);
+                
+                // Animate with more variety
+                const duration = Math.random() * 4 + 3;
+                const delay = Math.random() * 3;
+                
+                // More natural falling motion
+                confetti.animate([
+                    { 
+                        transform: `translate(0, 0) rotate(0deg)`, 
+                        opacity: 1 
+                    },
+                    { 
+                        transform: `translate(${Math.random() * 200 - 100}px, ${window.innerHeight * 0.5}px) rotate(${Math.random() * 360}deg)`, 
+                        opacity: 0.8
+                    },
+                    { 
+                        transform: `translate(${Math.random() * 400 - 200}px, ${window.innerHeight}px) rotate(${Math.random() * 720}deg)`, 
+                        opacity: 0 
+                    }
+                ], {
+                    duration: duration * 1000,
+                    delay: delay * 1000,
+                    easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
+                    fill: 'forwards'
+                });
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, (duration + delay) * 1000);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>admin</title>
+    </head>
+    <body>
+        <form action="" method="POST" id="UserForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table border="1" align="center">
+                <tr>
+                    <td>Name</td>
+                     <td><label for="txt_name"></label>
+                         <input type="text" name="txt_name" id="txt_name" /></td>
+                </tr>
+                <tr>
+                   <td>Email</td>
+                  <td><label for="txt_email"></label>
+                  <input type="email" name="txt_email" id="txt_email" /></td>
+                </tr>
+                
+                <tr>
+                              <td>Password</td>
+                             <td><label for="txt_password"></label>
+                                 <input type="password" name="txt_password" id="txt_password" /></td>
+                </tr>
+                <tr>
+                             <td colspan="2" align="center"><input type="submit" name="btn_submit" id="btn_submit" value="Submit" />
+                            <input type="reset" name="btn_cancel" id="btn_cancel" value="Cancel" /></td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>

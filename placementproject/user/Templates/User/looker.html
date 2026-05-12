@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Embedded Tableau Dashboard</title>
+    <style>
+        /* Basic styling for the dashboard container and the iframe */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            text-align: center;
+            padding-bottom: 20px;
+            color: #333;
+        }
+
+        .tableau-container {
+            /* Centers the container and gives it a max width */
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        #tableau-iframe {
+            /* Makes the iframe fill the container and sets its height */
+            width: 100%;
+            height: 800px; /* Adjust this height as needed for your view */
+            border: none; /* Removes the default iframe border */
+            display: block; /* Ensures it behaves like a block element */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Key Performance Indicators Dashboard 📊</h1>
+        <p>This dashboard presents real-time data from our Tableau Server.</p>
+    </header>
+
+    <div class="tableau-container">
+        <iframe width="1200" height="890" src="https://lookerstudio.google.com/embed/reporting/e16220ab-ba88-4632-ac21-ac059bdcab6c/page/huncF" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+    </div>
+
+</body>
+</html>

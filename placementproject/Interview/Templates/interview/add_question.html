@@ -1,0 +1,29 @@
+{% extends 'Admin/JobPost.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Question</title>
+    <style>
+        body { font-family: Arial; background: #f0f0f0; padding: 40px; }
+        .form-container { background: white; padding: 30px; border-radius: 10px; width: 400px; margin: auto; }
+        h2 { text-align: center; }
+        input[type=text] { width: 100%; padding: 10px; margin-top: 10px; }
+        button { margin-top: 20px; width: 100%; padding: 10px; background: #007bff; color: white; border: none; border-radius: 5px; }
+        a { text-decoration: none; color: #007bff; }
+    </style>
+</head>
+<body><br><br><br>
+    <div class="form-container">
+        <h2>Add New Question</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="question" placeholder="Enter interview question" required>
+            <button type="submit">Add Question</button>
+        </form>
+        <p><a href="{% url 'Interview:manage_questions' %}">Back to Manage Questions</a></p>
+    </div>
+</body>
+</html>
+{% endblock %}

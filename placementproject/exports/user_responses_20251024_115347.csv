@@ -1,0 +1,118 @@
+User,User_Email,Quiz_Type,Question_Number,Question_Text,Selected_Answer,Correct_Answers,Is_Correct,Is_Incorrect,Response_Timestamp,Time_Taken_Question_Seconds,Total_Quiz_Time_Seconds
+nandhusudheer,nandhusudheer123@gmail.com,hi,1,1000000,3,3,1,0,2025-10-22T05:51:17.739099+00:00,60,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T05:51:23.125530+00:00,5.39,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T05:51:26.512029+00:00,3.39,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,1,1000000,23,3,0,1,2025-10-22T07:00:07.029336+00:00,60,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,r,s,0,1,2025-10-22T07:00:11.124155+00:00,4.09,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T13:37:15.346337+00:00,60,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T13:37:18.534909+00:00,3.19,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T13:37:19.941502+00:00,1.41,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T13:37:20.902259+00:00,0.96,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T13:37:22.424909+00:00,1.52,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T13:37:22.998685+00:00,0.57,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T13:37:23.232316+00:00,0.23,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T13:37:23.435254+00:00,0.2,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T13:37:24.833893+00:00,1.4,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,1,1000000,s,3,1,0,2025-10-22T13:37:25.492051+00:00,0.66,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,1,1000000,s,3,1,0,2025-10-22T13:37:25.684952+00:00,0.19,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,1,1000000,s,3,1,0,2025-10-22T13:37:25.867935+00:00,0.18,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,1,1000000,23,3,0,1,2025-10-22T13:37:38.567235+00:00,12.7,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T14:04:26.815825+00:00,60,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T14:04:29.696355+00:00,2.88,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T14:04:30.898352+00:00,1.2,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T14:04:31.119339+00:00,0.22,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T14:04:31.305122+00:00,0.19,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T14:04:31.461686+00:00,0.16,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T14:04:31.684468+00:00,0.22,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T14:04:33.562828+00:00,1.88,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,1,1000000,s,3,1,0,2025-10-22T14:04:39.526803+00:00,5.96,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,1,1000000,s,3,1,0,2025-10-22T14:04:42.486600+00:00,2.96,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T14:06:10.970286+00:00,60,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T14:21:59.929566+00:00,60,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T14:26:39.184507+00:00,60,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T14:26:45.252912+00:00,6.07,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T14:26:46.184953+00:00,0.93,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T14:26:46.339567+00:00,0.15,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T14:26:46.488368+00:00,0.15,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T14:26:46.637210+00:00,0.15,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T14:26:46.872215+00:00,0.24,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,1,1000000,23,3,0,1,2025-10-22T14:27:01.132894+00:00,14.26,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-22T14:27:13.176130+00:00,12.04,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,1,1000000,3,3,1,0,2025-10-23T12:46:43.257381+00:00,60,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-23T12:47:08.109484+00:00,24.85,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,1,1000000,3,3,1,0,2025-10-23T14:00:05.753202+00:00,60,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-23T14:00:19.447455+00:00,13.69,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-23T14:00:35.700335+00:00,16.25,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,1,1000000,23,3,0,1,2025-10-23T18:01:10.426375+00:00,60,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-23T18:01:20.599072+00:00,10.17,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,hi,2,s,s,s,1,0,2025-10-23T18:01:30.901795+00:00,10.3,130213.16
+nandhusudheer,nandhusudheer123@gmail.com,Log,1,1,1,1,1,0,2025-10-22T14:03:30.633616+00:00,60,100103.17
+nandhusudheer,nandhusudheer123@gmail.com,Log,1,1,1,1,1,0,2025-10-22T14:03:31.632938+00:00,1.0,100103.17
+nandhusudheer,nandhusudheer123@gmail.com,Log,1,1,1,1,1,0,2025-10-22T14:03:32.547079+00:00,0.91,100103.17
+nandhusudheer,nandhusudheer123@gmail.com,Log,1,1,1,1,1,0,2025-10-22T14:03:32.769799+00:00,0.22,100103.17
+nandhusudheer,nandhusudheer123@gmail.com,Log,1,1,1,1,1,0,2025-10-22T14:03:34.955487+00:00,2.19,100103.17
+nandhusudheer,nandhusudheer123@gmail.com,Log,1,1,1,1,1,0,2025-10-22T14:03:36.404355+00:00,1.45,100103.17
+nandhusudheer,nandhusudheer123@gmail.com,Log,1,1,1,1,1,0,2025-10-22T14:03:37.356082+00:00,0.95,100103.17
+nandhusudheer,nandhusudheer123@gmail.com,Log,1,1,1,1,1,0,2025-10-22T14:27:37.812867+00:00,60,100103.17
+nandhusudheer,nandhusudheer123@gmail.com,Log,1,1,1,1,1,0,2025-10-22T14:27:59.151119+00:00,21.34,100103.17
+nandhusudheer,nandhusudheer123@gmail.com,Log,1,1,1,1,1,0,2025-10-23T17:50:49.336322+00:00,60,100103.17
+nandhusudheer,nandhusudheer123@gmail.com,Log,1,1,1,1,1,0,2025-10-23T17:51:53.807133+00:00,60,100103.17
+nandhusudheer,nandhusudheer123@gmail.com,new,1,a,a,a,1,0,2025-10-23T14:02:32.068070+00:00,60,13.14
+nandhusudheer,nandhusudheer123@gmail.com,new,2,xx,x,x,1,0,2025-10-23T14:02:45.206434+00:00,13.14,13.14
+nandhusudheer,nandhusudheer123@gmail.com,Aptitude,1,e,e,e,1,0,2025-10-23T14:54:32.812794+00:00,60,17.34
+nandhusudheer,nandhusudheer123@gmail.com,Aptitude,2,a,a,a,1,0,2025-10-23T14:54:45.527272+00:00,12.71,17.34
+nandhusudheer,nandhusudheer123@gmail.com,Aptitude,2,a,a,a,1,0,2025-10-23T14:54:50.153426+00:00,4.63,17.34
+nandhusudheer,nandhusudheer123@gmail.com,Aptitude 2,1,q,q,q,1,0,2025-10-23T17:58:03.602273+00:00,60,120.65
+nandhusudheer,nandhusudheer123@gmail.com,Aptitude 2,2,q,e,a,0,1,2025-10-23T17:58:16.893391+00:00,13.29,120.65
+nandhusudheer,nandhusudheer123@gmail.com,Aptitude 2,2,q,e,a,0,1,2025-10-23T17:58:19.650358+00:00,2.76,120.65
+nandhusudheer,nandhusudheer123@gmail.com,Aptitude 2,1,q,q,q,1,0,2025-10-23T17:59:41.987658+00:00,60,120.65
+nandhusudheer,nandhusudheer123@gmail.com,Aptitude 2,1,q,q,q,1,0,2025-10-23T17:59:44.593771+00:00,2.61,120.65
+nandhusudheer,nandhusudheer123@gmail.com,Aptitude 2,1,q,q,q,1,0,2025-10-23T17:59:47.164433+00:00,2.57,120.65
+nandhusudheer,nandhusudheer123@gmail.com,Aptitude 2,2,q,a,a,1,0,2025-10-23T17:59:57.183357+00:00,10.02,120.65
+nandhusudheer,nandhusudheer123@gmail.com,Aptitude 2,2,q,a,a,1,0,2025-10-23T18:00:04.248220+00:00,7.06,120.65
+nandhusudheer,nandhusudheer123@gmail.com,Ap,1,w,w,w,1,0,2025-10-23T17:55:16.859231+00:00,60,49.84
+nandhusudheer,nandhusudheer123@gmail.com,Ap,2,f,f,f,1,0,2025-10-23T17:55:31.506970+00:00,14.65,49.84
+nandhusudheer,nandhusudheer123@gmail.com,Ap,3,x,x,xw,0,1,2025-10-23T17:55:42.824155+00:00,11.32,49.84
+nandhusudheer,nandhusudheer123@gmail.com,Ap,4,x,s,s,1,0,2025-10-23T17:55:50.785684+00:00,7.96,49.84
+nandhusudheer,nandhusudheer123@gmail.com,Ap,5,s,s,s,1,0,2025-10-23T17:55:58.312541+00:00,7.53,49.84
+nandhusudheer,nandhusudheer123@gmail.com,Ap,5,s,s,s,1,0,2025-10-23T17:56:06.696330+00:00,8.38,49.84
+nandhusudheer,nandhusudheer123@gmail.com,ee,1,d,d,d,1,0,2025-10-23T17:51:28.170596+00:00,60,58.96
+nandhusudheer,nandhusudheer123@gmail.com,ee,2,a,x,x,1,0,2025-10-23T17:51:42.274389+00:00,14.1,58.96
+nandhusudheer,nandhusudheer123@gmail.com,ee,3,s,z,z,1,0,2025-10-23T17:51:51.485589+00:00,9.21,58.96
+nandhusudheer,nandhusudheer123@gmail.com,ee,3,s,d,z,0,1,2025-10-23T17:52:01.228521+00:00,9.74,58.96
+nandhusudheer,nandhusudheer123@gmail.com,ee,4,z,d,z,0,1,2025-10-23T17:52:10.126631+00:00,8.9,58.96
+nandhusudheer,nandhusudheer123@gmail.com,ee,5,x,x,x,1,0,2025-10-23T17:52:17.972956+00:00,7.85,58.96
+nandhusudheer,nandhusudheer123@gmail.com,ee,6,xx,xx,xx,1,0,2025-10-23T17:52:27.130960+00:00,9.16,58.96
+nandhusudheer,nandhusudheer123@gmail.com,fresh,1,x,e,e,1,0,2025-10-23T18:14:14.454194+00:00,60,20.63
+nandhusudheer,nandhusudheer123@gmail.com,fresh,2,s,d,s,0,1,2025-10-23T18:14:25.527604+00:00,11.07,20.63
+nandhusudheer,nandhusudheer123@gmail.com,fresh,2,s,d,s,0,1,2025-10-23T18:14:35.085174+00:00,9.56,20.63
+guest_2wfu75qe,guest_2wfu75qe@quiz.com,hi,1,1000000,23,3,0,1,2025-10-24T03:52:16.249681+00:00,60,31.23
+guest_2wfu75qe,guest_2wfu75qe@quiz.com,hi,2,s,s,s,1,0,2025-10-24T03:52:35.240674+00:00,18.99,31.23
+guest_2wfu75qe,guest_2wfu75qe@quiz.com,hi,2,s,s,s,1,0,2025-10-24T03:52:47.481320+00:00,12.24,31.23
+guest_2wfu75qe,guest_2wfu75qe@quiz.com,new,1,a,a,a,1,0,2025-10-24T03:47:00.349210+00:00,60,41.54
+guest_2wfu75qe,guest_2wfu75qe@quiz.com,new,2,xx,x,x,1,0,2025-10-24T03:47:34.843029+00:00,34.49,41.54
+guest_2wfu75qe,guest_2wfu75qe@quiz.com,new,2,xx,x,x,1,0,2025-10-24T03:47:41.891500+00:00,7.05,41.54
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,hi,1,1000000,q,3,0,1,2025-10-24T05:48:04.906216+00:00,60,2097.46
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,hi,2,s,s,s,1,0,2025-10-24T05:48:13.645628+00:00,8.74,2097.46
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,hi,3,4,4,4,1,0,2025-10-24T05:48:23.297388+00:00,9.65,2097.46
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,hi,1,1000000,q,3,0,1,2025-10-24T05:48:40.716839+00:00,17.42,2097.46
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,hi,3,4,4,4,1,0,2025-10-24T06:14:56.229396+00:00,60,2097.46
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,hi,3,4,4,4,1,0,2025-10-24T06:15:01.330040+00:00,5.1,2097.46
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,hi,1,1000000,q,3,0,1,2025-10-24T06:15:18.913785+00:00,17.58,2097.46
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,hi,2,s,s,s,1,0,2025-10-24T06:15:29.532745+00:00,10.62,2097.46
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,hi,3,4,4,4,1,0,2025-10-24T06:15:43.010046+00:00,13.48,2097.46
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,hi,1,1000000,q,3,0,1,2025-10-24T06:21:23.487635+00:00,60,2097.46
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,hi,2,s,s,s,1,0,2025-10-24T06:21:30.705447+00:00,7.22,2097.46
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,hi,3,4,4,4,1,0,2025-10-24T06:21:38.667980+00:00,7.96,2097.46
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,hi,3,4,4,4,1,0,2025-10-24T06:21:46.471223+00:00,7.8,2097.46
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,hi,1,1000000,23,3,0,1,2025-10-24T06:22:32.005350+00:00,45.53,2097.46
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,hi,2,s,s,s,1,0,2025-10-24T06:22:40.903229+00:00,8.9,2097.46
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,hi,3,4,4,4,1,0,2025-10-24T06:22:50.242577+00:00,9.34,2097.46
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,hi,3,4,4,4,1,0,2025-10-24T06:23:02.361822+00:00,12.12,2097.46
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,Aptitude 2,1,q,q,q,1,0,2025-10-24T05:35:40.168407+00:00,60,2887.26
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,Aptitude 2,2,q,e,a,0,1,2025-10-24T05:36:00.060972+00:00,19.89,2887.26
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,Aptitude 2,2,q,e,a,0,1,2025-10-24T05:36:10.584681+00:00,10.52,2887.26
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,Aptitude 2,1,q,q,q,1,0,2025-10-24T06:23:47.427435+00:00,60,2887.26
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,Nandhu,1,e,e,e,1,0,2025-10-24T05:39:29.650889+00:00,60,14.27
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,Nandhu,2,s,w,w,1,0,2025-10-24T05:39:43.921501+00:00,14.27,14.27
+guest_qwy7vdh4,guest_qwy7vdh4@quiz.com,Logical,1,s,s,s,1,0,2025-10-24T06:17:12.302328+00:00,60,0
